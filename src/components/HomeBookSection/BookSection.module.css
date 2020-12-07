@@ -1,0 +1,96 @@
+:root {
+  --fadewhite: #FAFAFA;
+  --accent: #FC7B03;
+}
+
+.bookSectionContainer{
+  width: 100%;
+  padding: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titleContainer{
+  width: 80%;
+  font-size: 1.7rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+}
+
+.orangeLine{
+  border-radius: 100vh;
+  background-color: var(--accent);
+  width: 6rem;
+  height: 0.3rem;
+}
+
+.sectionBookContainer{
+  padding: 1rem 1rem 1rem 0;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+}
+
+.coverImage{
+  min-height: 100%
+}
+
+.booksListContainer{
+  display: flex;
+  flex: 1;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  padding: 1rem 0;
+}
+
+.bookCardContainer{
+  background-color: var(--fadewhite);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 10rem;
+  max-width: 12rem;
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 10px;
+  border-radius: 3px;
+  margin-left: 1rem;
+}
+
+.bookImage{
+  width: 100%;
+  cursor: pointer;
+}
+
+
+.bookTitle{
+  font-size: 1rem;
+  font-weight: 600;
+  padding-top: 0.6rem;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.bookTitle:hover{
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 3px;
+  
+}
+
+.bookAuthor{
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bookCost{
+  color: var(--accent);
+  font-weight: bold;
+  font-size: 1.3rem;
+}

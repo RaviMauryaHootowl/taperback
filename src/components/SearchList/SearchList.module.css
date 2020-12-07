@@ -1,0 +1,68 @@
+:root {
+  --fadewhite: #FAFAFA;
+  --accent: #FC7B03;
+}
+
+
+.bookListContainer{
+  width: 80%;
+  padding: 2rem 1rem;
+}
+
+.searchHeader{
+  width: 80%;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+}
+
+.orangeLine{
+  border-radius: 100vh;
+  background-color: var(--accent);
+  width: 6rem;
+  height: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.searchBookCard{
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  padding: 1rem;
+  background-color: var(--fadewhite);
+  margin-bottom: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 10px;
+}
+
+.bookCoverImage{
+  height: 15rem;
+  cursor: pointer;
+}
+
+.bookInfoContainer{
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.bookTitle{
+  font-size: 1.8rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.bookTitle:hover{
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 3px;
+}
+
+.bookAuthor{
+  font-size: 1.3rem;
+}
+
+.bookCost{
+  font-size: 1.5rem;
+  color: var(--accent);
+  font-weight: bold;
+}

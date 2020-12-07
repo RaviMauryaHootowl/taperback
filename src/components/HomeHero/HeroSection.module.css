@@ -1,0 +1,17 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.heroContainer{
+  width: 100%;
+}
+
+.herobgImage{
+  cursor: pointer;
+  width: 100%;
+}
+.carousel{
+  border: none;
+}

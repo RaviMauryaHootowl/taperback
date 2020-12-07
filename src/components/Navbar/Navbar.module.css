@@ -1,0 +1,105 @@
+:root {
+  --fadewhite: #FAFAFA;
+  --accent: #FC7B03;
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.navOuterContainer{
+  width: 100%;
+  background-color: var(--fadewhite);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navInnerContainer{
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navTopSection{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1.5rem;
+}
+.logoImage{
+  cursor: pointer;
+  height: 2rem;
+}
+
+.searchBarContainer{
+  margin-left: 1.6rem;
+  flex: 1;
+  display: flex;
+}
+
+.searchBar{
+  padding: 0.6rem 1rem;
+  background-color: white;
+  border-bottom: 4px solid var(--accent);
+  border-radius: 4px;
+  display: flex;
+}
+
+.searchBarInput{
+  width: 22rem;
+  border: none;
+  outline: none;
+  font-size: 1.15rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.searchBtn{
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.searchBtnIcon, .cartIcon{
+  height: 1.7rem;
+}
+
+.accountContainer{
+  margin-left: 1.4rem;
+}
+
+.accountIcon{
+  height: 2.3rem;
+}
+
+.navBottomSection{
+  width: 100%;
+  padding: 1.3rem;
+  padding-top: 0;
+  display: flex;
+  
+}
+
+.genreLinkContainer{
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 0.2rem 3.2rem 0.1rem 0;
+}
+
+.genreLinks{
+  cursor: pointer;
+}
+
+.genreLinks:hover{
+  border-bottom: 4px solid var(--accent);
+  transition: border 0.1s ease;
+}
