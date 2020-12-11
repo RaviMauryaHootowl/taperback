@@ -4,6 +4,7 @@ import {useHistory} from 'react-router-dom';
 import queryString from 'querystring';
 import axios from 'axios';
 import SearchList from '../../components/SearchList/SearchList';
+import {Book} from '../../interfaces/BookInterface'
 
 const SearchPage = () => {
   const history = useHistory();
@@ -42,14 +43,5 @@ const SearchPage = () => {
   );
 }
 
-
-interface Book {
-  _id: any,
-  title: String,
-  author: String,
-  desc: String,
-  cover: String,
-  cost: Number
-}
 
 export default SearchPage;

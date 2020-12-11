@@ -1,0 +1,40 @@
+:root {
+  --fadewhite: #FAFAFA;
+  --accent: #FC7B03;
+  --black: #202020
+}
+
+
+.footerBarContainer{
+  opacity: 0;
+  animation: cssAnimation 2s forwards;
+  width: 100%;
+  padding-top: 2rem;
+}
+
+@keyframes cssAnimation {
+  50% {
+    opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+.blackBar{
+  display: none;
+  background-color: var(--black);
+  height: 1rem;
+}
+
+.accentBar{
+  background-color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.footerLogoImage{
+  height: 1.5rem;
+}

@@ -1,21 +1,16 @@
 import React, {useState, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
 import styles from './BookSection.module.css';
 import bestSellersImage from '../../images/bestsellerscover.png';
 import bookImg from '../../images/book1.png';
 import axios from 'axios';
+import {Book} from '../../interfaces/BookInterface'
+
 
 interface SectionDataSend {
   sectionName: String,
   sectionCover: String,
   sectionBooks: Array<Book>
-}
-
-interface Book {
-  title: String,
-  author: String,
-  desc: String,
-  cover: String,
-  cost: Number
 }
 
 const BookSection = () => {
@@ -39,32 +34,46 @@ const BookSection = () => {
 
 
   return (
-    <div className={styles.bookSectionContainer}>
-      <div className={styles.titleContainer}>
-        <span>2020 Best Sellers</span>
-        <div className={styles.orangeLine}></div>
-      </div>
-      <div className={styles.sectionBookContainer}>
-          <img className={styles.coverImage} src={bestSellersImage} alt=""/>
-          <div className={styles.booksListContainer}>
-            {
-              (sectionData.length > 0) ? sectionData[0].sectionBooks.map((book, index) => {
-                return (
-                  <BookCard book={book} key={index} />
-                );
-              }) : <div></div>
-            }
+    <>
+    {
+      sectionData.map((perSectionData, index) => {
+        return <div className={styles.bookSectionContainer}>
+          <div className={styles.titleContainer}>
+            <span>{perSectionData.sectionName}</span>
+            <div className={styles.orangeLine}></div>
           </div>
-      </div>
-    </div>
+          <div className={styles.sectionBookContainer}>
+              <img className={styles.coverImage} src={`${perSectionData.sectionCover}`} alt=""/>
+              <div className={styles.booksListContainer}>
+                {
+                  perSectionData.sectionBooks.map((book, index) => {
+                    return (
+                      <BookCard book={book} key={index} />
+                    );
+                  })
+                }
+              </div>
+          </div>
+        </div>
+      }) 
+    }
+    </>
+    
   );
 }
 
 const BookCard:React.FC<{book: Book}> = ({book}) => {
+
+  const history = useHistory();
+
+  const onBookClick = () => {
+    history.push({pathname:`/book/${book._id}`});
+  }
+
   return (
     <div className={styles.bookCardContainer}>
-      <img className={styles.bookImage} src={`${book.cover}`} alt="Book1"/>
-      <span className={styles.bookTitle}>{book.title}</span>
+      <img className={styles.bookImage} onClick={onBookClick} src={`${book.cover}`} alt="Book1"/>
+      <span className={styles.bookTitle} onClick={onBookClick}>{book.title}</span>
       <span className={styles.bookAuthor}>by {book.author}</span>
       <span className={styles.bookCost}>₹{book.cost}</span>
     </div>

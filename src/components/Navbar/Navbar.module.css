@@ -1,6 +1,7 @@
 :root {
   --fadewhite: #FAFAFA;
   --accent: #FC7B03;
+  --selectbg: #EEEEEE;
 }
 
 *{
@@ -75,18 +76,27 @@
 
 .accountContainer{
   margin-left: 1.4rem;
+  position: relative;
 }
 
 .accountIcon{
   height: 2.3rem;
+  border-radius: 100vh;
+  cursor: pointer;
 }
+
+.accountIcon:active{
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 5px;
+  transform: scale(0.95);
+}
+
+
 
 .navBottomSection{
   width: 100%;
   padding: 1.3rem;
   padding-top: 0;
-  display: flex;
-  
+  display: flex;  
 }
 
 .genreLinkContainer{

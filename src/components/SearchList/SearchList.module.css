@@ -51,6 +51,10 @@
   font-weight: 500;
   cursor: pointer;
 }
+.bookSubtitle{
+  font-size: 1.3rem;
+  font-weight: 400;
+}
 .bookTitle:hover{
   text-decoration: underline;
   text-decoration-color: var(--accent);

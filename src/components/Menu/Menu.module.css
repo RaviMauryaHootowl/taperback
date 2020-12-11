@@ -1,0 +1,26 @@
+:root {
+  --fadewhite: #FAFAFA;
+  --accent: #FC7B03;
+  --selectbg: #EEEEEE;
+}
+
+.dropDownMenuContainer{
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.212) 1px 1px 10px;
+  z-index: 10;
+  min-width: 10rem;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.dropDownMenuItem{
+  padding: 1rem 2rem;
+  cursor: pointer;
+}
+
+.dropDownMenuItem:hover{
+  background-color: var(--selectbg);
+}
