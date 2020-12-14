@@ -1,0 +1,140 @@
+.cartViewPageOuterContainer{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cartViewPageContainer{
+  width: 80%;
+  padding: 1.2rem;
+  display: flex;
+  
+}
+
+.cartListPane{
+  flex: 1;
+}
+
+.cartHeader{
+  width: 80%;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+}
+
+.orangeLine{
+  border-radius: 100vh;
+  background-color: var(--accent);
+  width: 5rem;
+  height: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+
+.cartBookCard{
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  padding: 1rem;
+  background-color: var(--fadewhite);
+  margin-bottom: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 10px;
+}
+
+.bookCoverImage{
+  height: 14rem;
+  cursor: pointer;
+}
+
+.bookInfoContainer{
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.bookTitle{
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.bookSubtitle{
+  font-size: 1rem;
+  font-weight: 400;
+}
+.bookTitle:hover{
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 3px;
+}
+
+.bookAuthor{
+  font-size: 1rem;
+}
+
+.bookCost{
+  font-size: 1.4rem;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+
+.payDetailsPane{
+  padding: 0.5rem 0 0.5rem 2rem;
+}
+
+.payDetailsContainer{
+  padding: 1rem;
+  background-color: var(--fadewhite);
+  box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 8px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pricingHeader{
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #161616;
+}
+
+.priceSheetContainer{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+.priceTag{
+  text-align: right;
+  padding-left: 3rem;
+  font-weight: 500;
+  color: #111111;
+}
+
+.splitLineOrange{
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent);
+  border-radius: 2px;
+}
+
+.totalTable{
+  margin: 1rem 0;
+}
+
+.totalTable .priceTag{
+  font-weight: bold;
+}
+
+.checkoutBtn{
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: var(--accent);
+  padding: 0.5rem;
+  font-size: 1rem;
+  color: white;
+  font-weight: bold;
+  border-radius: 2px;
+}

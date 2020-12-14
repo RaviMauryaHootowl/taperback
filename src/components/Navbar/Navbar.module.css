@@ -70,8 +70,34 @@
   align-items: center; 
 }
 
+.cartContainer{
+  position: relative;
+  cursor: pointer;
+}
+
 .searchBtnIcon, .cartIcon{
   height: 1.7rem;
+}
+
+.cartBadge{
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  border-radius: 50%;
+  width: 1.2rem;
+  height: 1.2rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: var(--accent);
+  color: rgb(49, 49, 49);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.cartContainer:hover > .cartBadge { 
+  transform: scale(1.4);
 }
 
 .accountContainer{
@@ -107,6 +133,11 @@
 
 .genreLinks{
   cursor: pointer;
+}
+
+.genreLinkActive{
+  cursor: pointer;
+  border-bottom: 4px solid var(--accent);
 }
 
 .genreLinks:hover{

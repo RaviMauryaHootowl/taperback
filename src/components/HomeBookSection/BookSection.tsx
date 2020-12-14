@@ -28,7 +28,7 @@ const BookSection = () => {
         setSectionData(response.data);
       })
       .catch(function (error) {
-        alert("Server down!")
+        alert("Server down!asdfasdf")
       });
   }
 

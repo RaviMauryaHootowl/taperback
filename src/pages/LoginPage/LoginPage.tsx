@@ -5,6 +5,7 @@ import logo from '../../images/logo.svg'
 import gLogo from '../../images/googlelogo.png'
 import {GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline} from 'react-google-login';
 import {UserContext} from '../../contexts/UserContext';
+import axios from 'axios';
 
 
 const LoginPage:React.FC = () => {
@@ -30,12 +31,19 @@ const LoginCard = () => {
   const CLIENT_ID:string = process.env.REACT_APP_CLIENT_ID || "";
 
 
-  const onSuccessCallback = (res : GoogleLoginResponse | GoogleLoginResponseOffline) =>{
+  const onSuccessCallback = (response : GoogleLoginResponse | GoogleLoginResponseOffline) =>{
     console.log("Logged In");
-    if(res.code === undefined){
-      console.log((res as GoogleLoginResponse).profileObj);
-      setUser({user : (res as GoogleLoginResponse).profileObj})
+    if(response.code === undefined){
+      const userProfileObj = (response as GoogleLoginResponse).profileObj;
+      
+      axios.post("/api/userLogin", {user : (response as GoogleLoginResponse).profileObj}).then(res => {
+        console.log(res.data);
+        setUser({user: res.data, tokenId: (response as GoogleLoginResponse).tokenId, imageUrl: userProfileObj.imageUrl})
+      }).catch((err) => {
+        console.log(err);
+      });
     }
+
   }
 
   return (

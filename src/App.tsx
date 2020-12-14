@@ -8,6 +8,7 @@ import BookViewPage from './pages/BookViewPage/BookViewPage';
 import { UserContext } from './contexts/UserContext';
 import LoginPage from './pages/LoginPage/LoginPage';
 import GenreBooksPage from './pages/GenreBooksPage/GenreBooksPage';
+import CartViewPage from './pages/CartViewPage/CartViewPage';
 
 
 const App:React.FC = () => {
@@ -23,6 +24,7 @@ const App:React.FC = () => {
         <Route path="/" exact component={Home}/>
         <Route path="/login" exact component={LoginPage}/>
         <Route path="/search" component={SearchPage}/>
+        <Route path="/cart" exact component={CartViewPage}/>
         <Route path="/book/:bookId" component={BookViewPage}/>
         <Route path="/genre/:genreName" component={GenreBooksPage}/>
       </UserContext.Provider>

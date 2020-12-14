@@ -47,6 +47,5 @@
   "devDependencies": {
     "@types/react-router-dom": "^5.1.6",
     "dotenv": "^8.2.0"
-  },
-  "proxy": "http://localhost:5000"
+  }
 }

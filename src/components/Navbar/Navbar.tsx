@@ -1,12 +1,11 @@
 import React, {useState, useContext} from 'react';
-import {Link, useHistory, useLocation} from 'react-router-dom';
+import {useHistory, useLocation, Link} from 'react-router-dom';
 import styles from './Navbar.module.css';
 import logo from '../../images/logo.svg';
 import searchIcon from '../../images/searchicon.svg';
 import cartIcon from '../../images/carticon.svg';
-import accountIcon from '../../images/sampleaccountimage.png';
 import userSample from '../../images/user.svg';
-import {GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogout, useGoogleLogin, useGoogleLogout} from 'react-google-login';
+import { useGoogleLogout} from 'react-google-login';
 import { UserContext } from '../../contexts/UserContext';
 import Menu from '../Menu/Menu';
 
@@ -16,26 +15,39 @@ const Navbar = () => {
   const history = useHistory();
   const [searchInput, setSearchInput] = useState<string>("");
   const {user, setUser} = useContext(UserContext);
+  console.log(user);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-
-  // const CLIENT_ID = "433430673302-s8jmm5nfunii54v95luruc5o80b9dkpq.apps.googleusercontent.com";
-  // const CLIENT_SECRET = "2U_F2VCBriA12Aa9p-ogeEvl";
-
-  const onSuccessCallback = (res : GoogleLoginResponse | GoogleLoginResponseOffline) =>{
-    console.log("Logged In");
-    if(res.code === undefined){
-      console.log((res as GoogleLoginResponse).profileObj);
-      setUser({user : (res as GoogleLoginResponse).profileObj})
+  const NavLinksList = [
+    {
+      "name" : "Fiction",
+      "pathName" : "/genre/fantasy&fiction"
+    },
+    {
+      "name" : "Children's",
+      "pathName" : "/genre/childrens"
+    },
+    {
+      "name" : "History",
+      "pathName" : "/genre/history"
+    },
+    {
+      "name" : "Horror",
+      "pathName" : "/genre/horror"
+    },
+    {
+      "name" : "Mystery",
+      "pathName" : "/genre/mystery"
+    },
+    {
+      "name" : "Non-Fiction",
+      "pathName" : "/genre/nonfiction"
     }
-  }
+  ]
+
+  const pathName = location.pathname;
 
   const CLIENT_ID:string = process.env.REACT_APP_CLIENT_ID || "";
   const CLIENT_SECRET:string = process.env.REACT_APP_CLIENT_SECRET || "";
-
-  const {signIn} = useGoogleLogin({
-    clientId: CLIENT_ID,
-    onSuccess: onSuccessCallback,
-  });
 
   const {signOut, loaded} = useGoogleLogout({
     clientId : CLIENT_ID,
@@ -53,13 +65,6 @@ const Navbar = () => {
     history.push({pathname:'/'});
   }
 
-  
-
-  const onFailure = (res : any) => {
-    console.log("Failed Login");
-    console.log(res);
-  }
-
   const logOutUser = () => {
     signOut();
     return true;
@@ -75,11 +80,11 @@ const Navbar = () => {
   }
 
   const navigateToGenrePage = (genrePath : String) => {
-    history.push({pathname:`/genre/${genrePath}`});
+    history.push({pathname:`${genrePath}`});
   }
 
   return (
-    (location.pathname !== "/login") ? <div className={styles.navOuterContainer}>
+    (pathName !== "/login") ? <div className={styles.navOuterContainer}>
       <div className={styles.navInnerContainer}>
         <div className={styles.navTopSection}>
           <img onClick={onClickLogo} className={styles.logoImage} src={logo} alt="Taperback"/>
@@ -93,9 +98,10 @@ const Navbar = () => {
             </div>
           </div>
           
-          <div className={styles.cartContainer}>
+          <Link to="/cart"><div className={styles.cartContainer}>
             <img className={styles.cartIcon} src={cartIcon} alt=""/>
-          </div>
+            <span className={styles.cartBadge}>{(user != null && user.user.cartItems) ? user.user.cartItems.items.length : 0}</span>
+          </div></Link>
           <div className={styles.accountContainer}>
             {
               (user == null) ? <div>
@@ -103,7 +109,7 @@ const Navbar = () => {
 
               </div> : (
                 <div>
-                  <img onClick={toggleMenu} className={styles.accountIcon} src={`${user.user.imageUrl}`} alt=""/>
+                  <img onClick={toggleMenu} className={styles.accountIcon} src={`${user.imageUrl}`} alt=""/>
                   {/* <GoogleLogout clientId={CLIENT_ID} buttonText="Logout" onLogoutSuccess={onLogSuccess}></GoogleLogout> */}
                   <Menu menuData={[{name: "Account", action: ()=> {return true;}},{name: "View Orders", action: ()=> {return true;}},{name: "Logout", action: logOutUser}]} isMOpen={isMenuOpen} />
                 </div>
@@ -112,24 +118,13 @@ const Navbar = () => {
           </div>
         </div>
         <div className={styles.navBottomSection}>
-          <div className={styles.genreLinkContainer} onClick={() => {navigateToGenrePage("fantasy&fiction");}}>
-            <span className={styles.genreLinks}>Fiction</span>
-          </div>
-          <div className={styles.genreLinkContainer}>
-            <span className={styles.genreLinks}>Children's</span>
-          </div>
-          <div className={styles.genreLinkContainer}>
-            <span className={styles.genreLinks}>History</span>
-          </div>
-          <div className={styles.genreLinkContainer}>
-            <span className={styles.genreLinks}>Horror</span>
-          </div>
-          <div className={styles.genreLinkContainer}>
-            <span className={styles.genreLinks}>Mystery</span>
-          </div>
-          <div className={styles.genreLinkContainer}>
-            <span className={styles.genreLinks}>View All</span>
-          </div>
+          {
+            NavLinksList.map((navLink, index) => {
+              return <div key={index} className={styles.genreLinkContainer} onClick={() => {navigateToGenrePage(navLink.pathName);}}>
+                <span className={(pathName === navLink.pathName) ? styles.genreLinkActive : styles.genreLinks}>{navLink.name}</span>
+              </div>
+            })
+          }
         </div>
       </div>
     </div> : <div></div>
@@ -137,13 +132,3 @@ const Navbar = () => {
 }
 
 export default Navbar;
-
-
-// <GoogleLogin 
-//               clientId={CLIENT_ID}
-//               buttonText={"Login"}
-//               onSuccess={onSuccess}
-//               onFailure={onFailure}
-//               cookiePolicy={'single_host_origin'}
-//               isSignedIn={true}
-//               />
