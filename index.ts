@@ -3,14 +3,13 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import path from 'path';
 import {LoginTicket, OAuth2Client} from 'google-auth-library';
-import { useGoogleLogin } from 'react-google-login';
 const bookModel = require('./schemas/book');
 const genreModel = require('./schemas/genre');
 const sectionModel = require('./schemas/section');
 const userModel = require('./schemas/user');
 const cartOrderModel = require('./schemas/cartOrder');
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.use(express.json())
 require('dotenv').config();
 
@@ -18,7 +17,10 @@ require('dotenv').config();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'build')));
+// app.use(express.static(path.join(__dirname, 'build')));
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static(path.join(__dirname, 'client/build')));
+}
 
 const CLIENT_ID = `${process.env.REACT_APP_CLIENT_ID}`
 const client = new OAuth2Client(CLIENT_ID);
@@ -213,9 +215,11 @@ const fetchBookData = async (id: String) => {
   return bookData;
 }
 
-app.get('/*', (req : express.Request, res : express.Response) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+if(process.env.NODE_ENV === 'production'){
+  app.get('*', (req : express.Request, res : express.Response) => {    
+    res.sendFile(path.join(__dirname = 'client/build/index.html'));  
+  })
+}
 
 app.listen(PORT, () => {
   console.log("Server started at PORT ", PORT)
