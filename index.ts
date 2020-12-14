@@ -71,7 +71,7 @@ app.get("/api/findBook", async (req: express.Request, res: express.Response) => 
 
 app.get("/api/indexBooks", async (req : express.Request, res : express.Response) => {
   const data : SectionsArrayDataGet = await sectionModel.find({});
-  const sections = [];
+  const sections:any = [];
   console.log("Index Books called!")
   const nOfSections = data.length;
   for(let i = 0; i < nOfSections; i++){
@@ -165,7 +165,7 @@ app.get("/api/getCart", async (req: express.Request, res: express.Response) => {
   
   const cart = await cartOrderModel.findOne({_id : cartId});
   const cartItems = cart.toObject().items;
-  let bookCartItems = [];
+  let bookCartItems:any = [];
   for(let i = 0; i < cartItems.length; i++){
     const book = await fetchBookData(cartItems[i].bookId);
     bookCartItems.push(book)
