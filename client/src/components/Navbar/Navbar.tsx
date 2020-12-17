@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {useHistory, useLocation, Link} from 'react-router-dom';
 import styles from './Navbar.module.css';
 import logo from '../../images/logo.svg';
@@ -8,6 +8,7 @@ import userSample from '../../images/user.svg';
 import { useGoogleLogout} from 'react-google-login';
 import { UserContext } from '../../contexts/UserContext';
 import Menu from '../Menu/Menu';
+import axios from 'axios';
 
 
 const Navbar = () => {

@@ -1,42 +1,62 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
-import styles from './CartViewPage.module.css';
+import styles from './BuyPage.module.css';
 import {Book} from '../../interfaces/BookInterface';
 import StarDisplay from '../../components/StarDisplay/StarDisplay';
 import { UserContext } from '../../contexts/UserContext';
 import axios from 'axios';
 
-const CartViewPage = () => {
+const BuyPage = ({location}) => {
   const history = useHistory();
   const {user, setUser} = useContext(UserContext);
-  const [cartId, setCartId] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
   const [cart, setCart] = useState<Array<Book>>([]);
+  const [cartId, setCartId] = useState<string>("");
   const [cartTotalCost, setCartTotalCost] = useState<number>(0);
 
   useEffect(() => {
-    if(user == null){
-      //history.replace({pathname: "/login"});
+    if(location.state == null){
+      history.replace({pathname: "/login"});
     }else{
-      setCartId(user.user.cart);
+      setCart(location.state.cart);
+      console.log("Location CartId : " + location.state.cartId);
+      setCartId(location.state.cartId);
     }
-  }, [user])
+    
+  }, [location])
 
   useEffect(() => {
-    if(cartId !== "" && cartId !== "0"){
-      // fetch cart with book Items from api
-      axios.get("/api/getCart", {
-        params: {cartId: cartId}
-      }).then((res) => {
-        setCart(res.data);
-      }).catch((err) => {
-        alert("Server Error!")
-      })
+    if(user == null){
+      history.replace({pathname: "/login"});
     }
-  },[cartId])
+  }, [])
+
+
+  const confirmPurchaseClick = () => {
+    const userGoogleId = user.user.googleId;
+    const tokenId = user.tokenId;
+    axios.post("/api/orderCart", {tokenId, cartId: cartId, userGoogleId}).then(res => {
+      console.log(res.data);
+      const {message} = res.data;
+      if(message === "ordered"){
+        alert("Your Order has been placed.")
+        // refresh your user
+        refreshUser();
+      }
+    })
+  }
+
+  const refreshUser = () => {
+    axios.get("/api/refreshUser", {params: {userGoogleId: user.user.googleId}}).then((res) => {
+      const updatedUser = user;
+      updatedUser.user = res.data;
+      setUser({...updatedUser});
+      history.replace("/");
+    });
+  }
 
 
   useEffect(() => {
-
     let totalCost = 0;
     for(let i = 0; i < cart.length; i++){
       totalCost += Number(cart[i].cost);
@@ -62,22 +82,9 @@ const CartViewPage = () => {
         </div>
         <div className={styles.payDetailsPane}>
           <div className={styles.payDetailsContainer}>
-            <span className={styles.pricingHeader}>Pricing Details</span>
-            <div className={styles.priceSheetContainer}>
-              <table className={styles.priceSheetTable}>
-                <tr>
-                  <td className={styles.priceLabel}>Books Total</td>
-                  <td className={styles.priceTag}>Rs. {cartTotalCost}</td>
-                </tr>
-                <tr>
-                  <td className={styles.priceLabel}>GST Total</td>
-                  <td className={styles.priceTag}>Rs. 50</td>
-                </tr>
-                <tr>
-                  <td className={styles.priceLabel}>Delivery Charges</td>
-                  <td className={styles.priceTag}>Rs. 60</td>
-                </tr>
-              </table>
+            <span className={styles.pricingHeader}>Shipping Details</span>
+            <div className={styles.addressContainer}>
+              <textarea value={address} onChange={(e) => {setAddress(e.target.value)}} className={styles.addressTextArea} placeholder={"Enter your Shipping Address"}></textarea>
             </div>
             <div className={styles.splitLineOrange}></div>
             <table className={styles.totalTable}>
@@ -86,9 +93,7 @@ const CartViewPage = () => {
                   <td className={styles.priceTag}>Rs. {cartTotalCost + 110}</td>
                 </tr>
               </table>
-            <button onClick={() => {
-              history.push({pathname:'/checkout', state:{cart : cart, cartId: cartId}});
-            }} className={styles.checkoutBtn}>Checkout</button>
+            <button onClick={confirmPurchaseClick} className={styles.purchaseBtn}>Confirm Purchase</button>
           </div>
         </div>
       </div>
@@ -111,7 +116,7 @@ const CartBookCard: React.FC<{book: Book}> = ({book}) => {
       <div className={styles.bookInfoContainer}>
         <span className={styles.bookTitle} onClick={onBookClick}>{book.title}</span>
         {
-          (book.subtitle !== "") &&<span className={styles.bookSubtitle}>({book.subtitle})</span>
+          (book.subtitle != "") &&<span className={styles.bookSubtitle}>({book.subtitle})</span>
         }
         <span className={styles.bookAuthor}>{book.author}</span>
         <StarDisplay value={parseFloat(`${book.ratings}`)} size={'20px'}/>
@@ -121,4 +126,4 @@ const CartBookCard: React.FC<{book: Book}> = ({book}) => {
   );
 }
 
-export default CartViewPage;
+export default BuyPage;

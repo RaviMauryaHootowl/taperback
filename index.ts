@@ -46,8 +46,8 @@ const verify = async (token: string) : Promise<boolean> => {
   if(ticket){
     const payload:any = ticket.getPayload();
     const userid = payload['sub'];
-    console.log("----- PAYLOAD -----");
-    console.log(payload);
+    // console.log("----- PAYLOAD -----");
+    // console.log(payload);
     return true;
   }else{
     return false;
@@ -72,7 +72,7 @@ app.get("/api/findBook", async (req: express.Request, res: express.Response) => 
 app.get("/api/indexBooks", async (req : express.Request, res : express.Response) => {
   const data : SectionsArrayDataGet = await sectionModel.find({});
   const sections:any = [];
-  console.log("Index Books called!")
+  // console.log("Index Books called!")
   const nOfSections = data.length;
   for(let i = 0; i < nOfSections; i++){
     const section = emptySectionModel();
@@ -122,7 +122,7 @@ app.post("/api/userLogin", async (req: express.Request, res: express.Response) =
     googleId: user.googleId,
     email: user.email,
     name: user.name,
-    cart: "",
+    cart: "0",
     orders: []
   }
   // console.log(userData);
@@ -134,28 +134,62 @@ app.post("/api/userLogin", async (req: express.Request, res: express.Response) =
   let cart: any = await getCartDetails(userData.googleId);
   const userObjectToSend = result.toObject({ getters: true, virtuals: false });
   userObjectToSend.cartItems = cart;
-  console.log(userObjectToSend);
+  userObjectToSend.cart = cart._id;
+  // console.log(userObjectToSend);
   res.send(userObjectToSend)
+});
+
+app.post("/api/userLoginFast", async (req: express.Request, res: express.Response) => {
+  const {userGoogleId} = req.body;
+  // const userData = {
+  //   googleId: user.googleId,
+  //   email: user.email,
+  //   name: user.name,
+  //   cart: "0",
+  //   orders: []
+  // }
+  // console.log(userData);
+  let result = await userModel.findOne({googleId: userGoogleId});
+  if(result == null){
+    res.send({message: "error"}).status(500);
+  }
+  let cart: any = await getCartDetails(result.googleId);
+  const userObjectToSend = result.toObject({ getters: true, virtuals: false });
+  userObjectToSend.cartItems = cart;
+  userObjectToSend.cart = cart._id;
+  // console.log(userObjectToSend);
+  res.send(userObjectToSend)
+});
+
+
+app.get("/api/refreshUser", async (req: express.Request, res: express.Response) => {
+  const {userGoogleId} = req.query;
+
+  let user = await userModel.findOne({googleId: userGoogleId});
+  res.send(user);
+
 })
+
 
 const getCartDetails = async (userGoogleId: string) => {
   const user = await userModel.findOne({googleId: userGoogleId});
     // if users cart is empty string
     // create new cartOrder Document
     let cart;
-    if(user.cart == ""){
+    if(user.cart == "0"){
       const emptyCartObject = {
         user_id: userGoogleId,
         status: "cart",
         items: [],
         cost: 0
       }
+      // console.log("CREATING NEW CART.....");
       cart = new cartOrderModel(emptyCartObject);
       user.cart = cart._id;
       await user.save();
+      await cart.save();
     }else{
       cart = await cartOrderModel.findOne({_id : user.cart});
-      // console.log(cart);
     }
     return cart;
 }
@@ -183,12 +217,39 @@ app.post("/api/addToCart", async (req: express.Request, res: express.Response) =
     cart.items.push({bookId: bookId});
     await cart.save();
 
-    //console.log(cart);
+    console.log(cart);
     res.send({message: "Added to cart", cart : cart.toObject()})
   } else {
     res.send({message: "Invalid Token"})
   }
 })
+
+app.post("/api/orderCart", async (req: express.Request, res: express.Response) => {
+  const {tokenId, cartId, userGoogleId} = req.body;
+  console.log("------------------")
+  console.log(tokenId + " " + cartId + " " + userGoogleId);
+  console.log("------------------")
+  const isVerified:boolean = await verify(tokenId);
+
+  if(isVerified){
+    // Mark Cart Status as ordered
+    let cart:any = await cartOrderModel.findOne({_id : cartId});
+    console.log(cart);
+    if(cart){
+      cart.status = "ordered";
+      cart.save();
+      // console.log("------------ cart status changed ------------------")
+      // From users send this cartId to orders
+      const user = await userModel.findOne({googleId: userGoogleId});
+      user.cart = "0";
+      user.orders.push({id : cartId})
+      user.save();
+      res.send({"message" : "ordered"})
+    }
+  }else{
+    res.send({"message" : "error"}).status(500)
+  }
+});
 
 const getBooksArray = async (books : Array<SectionBook>) => {
   let booksData : Array<Book> = [];

@@ -14,7 +14,9 @@ const BookDetails:React.FC<{bookDetails : Book}> = ({bookDetails}) => {
       const userGoogleId = user.user.googleId;
       const tokenId = user.tokenId;
       axios.post("/api/addToCart", {tokenId, bookId: bookDetails._id, userGoogleId}).then(res => {
+        console.log(res.data);
         updatedUser.user.cartItems = res.data.cart;
+        updatedUser.user.cart = res.data.cart._id;
         setUser({...updatedUser});
       })
     }

@@ -14,6 +14,7 @@ const LoginPage:React.FC = () => {
   const {user, setUser} = useContext(UserContext);
   useEffect(() => {
     if(user != null){
+
       history.replace("/")
     } 
   }, [user])
@@ -39,11 +40,11 @@ const LoginCard = () => {
       axios.post("/api/userLogin", {user : (response as GoogleLoginResponse).profileObj}).then(res => {
         console.log(res.data);
         setUser({user: res.data, tokenId: (response as GoogleLoginResponse).tokenId, imageUrl: userProfileObj.imageUrl})
+        localStorage.setItem("gAuth", JSON.stringify({user: res.data, tokenId: (response as GoogleLoginResponse).tokenId, imageUrl: userProfileObj.imageUrl}));
       }).catch((err) => {
         console.log(err);
       });
     }
-
   }
 
   return (
