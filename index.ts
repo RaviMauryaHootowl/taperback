@@ -15,9 +15,8 @@ require('dotenv').config();
 
 
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-// app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.json());
+app.use(express.urlencoded({extended: true})); 
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static(path.join(__dirname, 'client/build')));
 }
@@ -278,7 +277,7 @@ const fetchBookData = async (id: String) => {
 
 if(process.env.NODE_ENV === 'production'){
   app.get('*', (req : express.Request, res : express.Response) => {    
-    res.sendFile(path.join(__dirname = 'client/build/index.html'));  
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   })
 }
 
