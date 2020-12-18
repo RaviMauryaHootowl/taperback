@@ -3,28 +3,38 @@ import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 import styles from './GenreBooksPage.module.css';
 import fantasyImg from '../../images/fantasyHeader.png'
+import childrensImg from '../../images/childrensHeader.png'
 import {Book} from '../../interfaces/BookInterface'
 import {GenreGetInterface} from '../../interfaces/GenreGetInterface'
+import Loader from '../../components/Loader/Loader';
 
 const genreMap:any = {
   "fantasy&fiction" : {
     "name" : "Fantasy & Fiction",
-    "image": fantasyImg
+    "image": fantasyImg,
+    "textColor": "#000000",
+    "shadowColor": "#ffffff"
+  },
+  "childrens" : {
+    "name" : "Children's",
+    "image": childrensImg,
+    "textColor": "#ffffff",
+    "shadowColor": "#000000"
   }
 }
 
 const GenreBooksPage:React.FC<{match : any}> = ({match}) => {
 
   const [genreData, setGenreData] = useState<GenreGetInterface>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [genreName, setGenreName] = useState<string>(match.params.genreName);
 
-  const {
-    params: {genreName},
-  } = match;
-  const loc = "../../images/fantasyHeader.png";
-
-  console.log(genreName);
+  useEffect(() => {
+    setGenreName(match.params.genreName);
+  }, [match])
 
   const fetchGenre = () => {
+    setIsLoading(true);
     axios.get('/api/genre', {
       params: {
         genrePath: genreName
@@ -33,7 +43,7 @@ const GenreBooksPage:React.FC<{match : any}> = ({match}) => {
       .then(function (response) {
         console.log(response.data);
         setGenreData(response.data);
-        // setBookDetails(response.data);
+        setIsLoading(false);
       })
       .catch(function (error) {
         alert("Server down!")
@@ -47,17 +57,17 @@ const GenreBooksPage:React.FC<{match : any}> = ({match}) => {
   return (
     <div className={styles.genreBookPageOuterContainer}>
       <div className={styles.genreBookPageContainer}>
-        <div className={styles.headerForGenre}>
-          <span className={styles.genreName}>{genreMap[genreName].name}</span>
+        <div className={styles.headerForGenre} style={{ backgroundImage: `url(${genreMap[genreName].image})` }}>
+          <span className={styles.genreName} style={{color: `${genreMap[genreName].textColor}`, textShadow: `${genreMap[genreName].shadowColor} 2px 2px 10px`}}>{genreMap[genreName].name}</span>
         </div>
 
-        <div className={styles.booksListContainer}>
+        {(isLoading) ? <div className={styles.loaderDiv}><Loader size={50} border={8} color={"#FC7B03"}/></div> : <div className={styles.booksListContainer}>
           {
             genreData?.genreBooks.map((book, index) => {
               return <BookCard book={book}/>
             })
           }
-        </div>
+        </div>}
 
       </div>
       

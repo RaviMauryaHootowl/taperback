@@ -1,49 +1,52 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import {useHistory, useLocation, Link} from 'react-router-dom';
 import styles from './Navbar.module.css';
 import logo from '../../images/logo.svg';
 import searchIcon from '../../images/searchicon.svg';
 import cartIcon from '../../images/carticon.svg';
 import userSample from '../../images/user.svg';
+import hamIcon from '../../images/hamIcon.svg';
 import { useGoogleLogout} from 'react-google-login';
 import { UserContext } from '../../contexts/UserContext';
 import Menu from '../Menu/Menu';
-import axios from 'axios';
+import SlideMenu from '../SlideMenu/SlideMenu';
 
+const NavLinksList = [
+  {
+    "name" : "Fiction",
+    "pathName" : "/genre/fantasy&fiction"
+  },
+  {
+    "name" : "Children's",
+    "pathName" : "/genre/childrens"
+  },
+  {
+    "name" : "History",
+    "pathName" : "/genre/history"
+  },
+  {
+    "name" : "Horror",
+    "pathName" : "/genre/horror"
+  },
+  {
+    "name" : "Mystery",
+    "pathName" : "/genre/mystery"
+  },
+  {
+    "name" : "Non-Fiction",
+    "pathName" : "/genre/nonfiction"
+  }
+]
 
 const Navbar = () => {
   const location = useLocation();
   const history = useHistory();
   const [searchInput, setSearchInput] = useState<string>("");
+  const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const {user, setUser} = useContext(UserContext);
   console.log(user);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const NavLinksList = [
-    {
-      "name" : "Fiction",
-      "pathName" : "/genre/fantasy&fiction"
-    },
-    {
-      "name" : "Children's",
-      "pathName" : "/genre/childrens"
-    },
-    {
-      "name" : "History",
-      "pathName" : "/genre/history"
-    },
-    {
-      "name" : "Horror",
-      "pathName" : "/genre/horror"
-    },
-    {
-      "name" : "Mystery",
-      "pathName" : "/genre/mystery"
-    },
-    {
-      "name" : "Non-Fiction",
-      "pathName" : "/genre/nonfiction"
-    }
-  ]
+  
 
   const pathName = location.pathname;
 
@@ -76,6 +79,10 @@ const Navbar = () => {
     (isMenuOpen) && toggleMenu();
   }
 
+  const onClickHam = () => {
+    (isNavOpen) ? setIsNavOpen(false) : setIsNavOpen(true);
+  }
+
   const toggleMenu = () => {
     (isMenuOpen) ? setIsMenuOpen(false) : setIsMenuOpen(true);  
   }
@@ -86,8 +93,13 @@ const Navbar = () => {
 
   return (
     (pathName !== "/login") ? <div className={styles.navOuterContainer}>
+      {(isNavOpen) && <div className={styles.slideMenuContainer}>
+        <SlideMenu onClickHam={onClickHam} pathName={pathName} navigateToGenrePage={navigateToGenrePage}/>
+      </div>}
+      
       <div className={styles.navInnerContainer}>
         <div className={styles.navTopSection}>
+          <img onClick={onClickHam} className={styles.hamBtn} src={hamIcon} alt=""/>
           <img onClick={onClickLogo} className={styles.logoImage} src={logo} alt="Taperback"/>
           <div className={styles.searchBarContainer}>
             <div className={styles.searchBar}>
@@ -111,7 +123,6 @@ const Navbar = () => {
               </div> : (
                 <div>
                   <img onClick={toggleMenu} className={styles.accountIcon} src={`${user.imageUrl}`} alt=""/>
-                  {/* <GoogleLogout clientId={CLIENT_ID} buttonText="Logout" onLogoutSuccess={onLogSuccess}></GoogleLogout> */}
                   <Menu menuData={[{name: "Account", action: ()=> {return true;}},{name: "View Orders", action: ()=> {return true;}},{name: "Logout", action: logOutUser}]} isMOpen={isMenuOpen} />
                 </div>
               )

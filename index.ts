@@ -45,8 +45,6 @@ const verify = async (token: string) : Promise<boolean> => {
   if(ticket){
     const payload:any = ticket.getPayload();
     const userid = payload['sub'];
-    // console.log("----- PAYLOAD -----");
-    // console.log(payload);
     return true;
   }else{
     return false;
@@ -140,14 +138,6 @@ app.post("/api/userLogin", async (req: express.Request, res: express.Response) =
 
 app.post("/api/userLoginFast", async (req: express.Request, res: express.Response) => {
   const {userGoogleId} = req.body;
-  // const userData = {
-  //   googleId: user.googleId,
-  //   email: user.email,
-  //   name: user.name,
-  //   cart: "0",
-  //   orders: []
-  // }
-  // console.log(userData);
   let result = await userModel.findOne({googleId: userGoogleId});
   if(result == null){
     res.send({message: "error"}).status(500);
@@ -156,7 +146,6 @@ app.post("/api/userLoginFast", async (req: express.Request, res: express.Respons
   const userObjectToSend = result.toObject({ getters: true, virtuals: false });
   userObjectToSend.cartItems = cart;
   userObjectToSend.cart = cart._id;
-  // console.log(userObjectToSend);
   res.send(userObjectToSend)
 });
 

@@ -17,6 +17,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.slideMenuContainer{
+  position: absolute;
+  z-index: 10;
+  background-color: white;
+  top: 0;
+  left: 0;
+  width: 80%;
 }
 
 .navInnerContainer{
@@ -33,9 +43,19 @@
   align-items: center;
   padding: 1.5rem;
 }
+
+.hamBtn{
+  display: none;
+  height: 1rem;
+  cursor: pointer;
+  margin-right: 1rem;
+  -webkit-tap-highlight-color:  transparent;
+}
+
 .logoImage{
   cursor: pointer;
   height: 2rem;
+  -webkit-tap-highlight-color:  transparent;
 }
 
 .searchBarContainer{
@@ -122,13 +142,13 @@
   width: 100%;
   padding: 1.3rem;
   padding-top: 0;
-  display: flex;  
+  display: flex;
 }
 
 .genreLinkContainer{
   font-size: 1.1rem;
   font-weight: 500;
-  padding: 0.2rem 3.2rem 0.1rem 0;
+  padding: 0.2rem 3rem 0.1rem 0;
 }
 
 .genreLinks{
@@ -143,4 +163,67 @@
 .genreLinks:hover{
   border-bottom: 4px solid var(--accent);
   transition: border 0.1s ease;
+}
+
+
+/* Responsive Code */
+
+@media only screen and (max-width: 992px){
+
+  .logoImage{
+    height: 1.6rem;
+  }
+
+  .searchBarInput{
+    width: 12rem;
+  }
+
+  .genreLinkContainer{
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.2rem 2.4rem 0.1rem 0;
+  }
+}
+
+@media only screen and (max-width: 768px){
+
+  .navInnerContainer{
+    width: 95%;
+  }
+
+  .hamBtn{
+    display: block;
+  }
+
+  .logoImage{
+    height: 1.6rem;
+  }
+
+  .searchBarInput{
+    width: 10rem;
+  }
+
+  .navBottomSection{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px){
+
+  .navInnerContainer{
+    width: 99%;
+  }
+
+  .logoImage{ 
+    height: 1.6rem;
+    flex: 1;
+  }
+
+  .searchBarContainer{
+    display: none;
+  }
+
+  .navBottomSection{
+    display: none;
+  }
 }

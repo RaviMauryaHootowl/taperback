@@ -4,8 +4,9 @@ import BookSection from '../HomeBookSection/BookSection';
 import StarDisplay from '../StarDisplay/StarDisplay';
 import styles from './SearchList.module.css';
 import {Book} from '../../interfaces/BookInterface'
+import Loader from '../Loader/Loader';
 
-const SearchList: React.FC<{bookData : Array<Book>}> = ({bookData}) => {
+const SearchList: React.FC<{bookData : Array<Book>, isLoading: boolean}> = ({bookData, isLoading}) => {
 
 
   return (
@@ -15,7 +16,7 @@ const SearchList: React.FC<{bookData : Array<Book>}> = ({bookData}) => {
         <div className={styles.orangeLine}></div>
       </div>
       {
-        bookData.map((book, index) => {
+        (isLoading)? <div className={styles.loaderDiv}><Loader size={50} border={8} color={"#FC7B03"}/></div> :bookData.map((book, index) => {
           return (
             <SearchBookCard book={book} key={index}/>
           );
@@ -38,7 +39,7 @@ const SearchBookCard: React.FC<{book: Book}> = ({book}) => {
       <img className={styles.bookCoverImage} onClick={onBookClick} src={`${book.cover}`} alt={`${book.title}`}/>
       <div className={styles.bookInfoContainer}>
         <span className={styles.bookTitle} onClick={onBookClick}>{book.title}</span>
-        <span className={styles.bookSubtitle}>({book.subtitle})</span>
+        {(book.subtitle !== "") && <span className={styles.bookSubtitle}>({book.subtitle})</span>}
         <span className={styles.bookAuthor}>{book.author}</span>
         <StarDisplay value={parseFloat(`${book.ratings}`)} size={'20px'}/>
         <span className={styles.bookCost}>₹{book.cost}</span>

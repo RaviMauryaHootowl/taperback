@@ -3,9 +3,10 @@
   --accent: #FC7B03;
 }
 
-.bookSectionContainer{
+
+.bookSectionContainer, .loaderDiv{
   width: 100%;
-  padding: 2rem 0 0rem 0;
+  padding: 2.4rem 0 0rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,7 +28,7 @@
 }
 
 .sectionBookContainer{
-  padding: 1rem 1rem 1rem 0;
+  padding: 1rem 1rem 1rem 0rem;
   width: 100%;
   display: flex;
   align-items: stretch;
@@ -35,6 +36,7 @@
 
 .coverImage{
   height: 100%;
+  align-self: center;
 }
 
 .booksListContainer{
@@ -95,4 +97,64 @@
   flex: 1;
   display: flex;
   align-items: flex-end;
+}
+
+/* Responsive Code */
+
+@media only screen and (max-width: 992px){
+
+  .coverImage{
+    width: 15rem;
+  }
+  
+}
+
+@media only screen and (max-width: 768px){
+
+  .titleContainer{
+    width: 95%;
+    padding: 1rem 1rem 0 1rem;
+    font-size: 1.5rem;
+  }
+
+  .coverImage{
+    display: none;
+  }
+
+  .bookCardContainer{
+    margin-right: 1rem;
+    margin-left: 0;
+  }
+
+  .bookSectionContainer, .loaderDiv{
+    padding: 1rem 0 0rem 0;
+  }
+
+  .sectionBookContainer{
+    padding: 0rem 1rem 1rem 0;
+  }
+
+  .booksListContainer{
+    padding: 1rem 1rem;
+  }
+  
+}
+
+@media only screen and (max-width: 600px){
+
+  .titleContainer{
+    width: 99%;
+    font-size: 1.4rem;
+  }
+
+  .bookSectionContainer, .loaderDiv{
+    padding: 0.5rem 0 0rem 0;
+  }
+
+  .bookCardContainer{
+    padding: 0.8rem;
+    box-shadow: rgba(0, 0, 0, 0.14) 1px 1px 8px;
+    margin-right: 0.4rem;
+    margin-left: 0;
+  }
 }

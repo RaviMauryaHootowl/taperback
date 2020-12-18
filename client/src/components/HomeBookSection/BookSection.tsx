@@ -5,6 +5,7 @@ import bestSellersImage from '../../images/bestsellerscover.png';
 import bookImg from '../../images/book1.png';
 import axios from 'axios';
 import {Book} from '../../interfaces/BookInterface'
+import Loader from '../Loader/Loader';
 
 
 interface SectionDataSend {
@@ -16,6 +17,8 @@ interface SectionDataSend {
 const BookSection = () => {
 
   const [sectionData, setSectionData] = useState<Array<SectionDataSend>>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
 
   useEffect(() => {
     fetchBookSections();
@@ -26,9 +29,11 @@ const BookSection = () => {
       .then(function (response) {
         console.log(response.data);
         setSectionData(response.data);
+        setIsLoading(false);
       })
       .catch(function (error) {
         alert("Server down!asdfasdf")
+        setIsLoading(false);
       });
   }
 
@@ -36,7 +41,7 @@ const BookSection = () => {
   return (
     <>
     {
-      sectionData.map((perSectionData, index) => {
+      (isLoading) ? <div className={styles.loaderDiv}><Loader size={50} border={8} color={"#FC7B03"}/></div> : sectionData.map((perSectionData, index) => {
         return <div className={styles.bookSectionContainer}>
           <div className={styles.titleContainer}>
             <span>{perSectionData.sectionName}</span>
