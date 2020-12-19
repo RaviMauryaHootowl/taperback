@@ -138,6 +138,17 @@ const Navbar = () => {
             })
           }
         </div>
+        <div className={styles.navBottomSearch}>
+          <div className={styles.searchBarBottomContainer}>
+            <div className={styles.searchBar}>
+              <input className={styles.searchBarInput} value={searchInput} onChange={(e) => {setSearchInput(e.target.value)}} onKeyDown={(e) => {if(e.key === "Enter"){onSearch()}}} type="text" placeholder="Search for books, authors, etc..."/>
+              <button onClick={onSearch} className={styles.searchBtn}>
+                <img src={searchIcon} className={styles.searchBtnIcon} alt="Search"/>
+                
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div> : <div></div>
   );

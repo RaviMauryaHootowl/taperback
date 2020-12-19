@@ -13,11 +13,17 @@ const BookDetails:React.FC<{bookDetails : Book}> = ({bookDetails}) => {
     if(user != null){
       const userGoogleId = user.user.googleId;
       const tokenId = user.tokenId;
+      console.log(bookDetails);
       axios.post("/api/addToCart", {tokenId, bookId: bookDetails._id, userGoogleId}).then(res => {
-        console.log(res.data);
-        updatedUser.user.cartItems = res.data.cart;
-        updatedUser.user.cart = res.data.cart._id;
-        setUser({...updatedUser});
+        if(res.data.message === "Invalid Token"){
+          alert("Error. Logout and Login again.")
+        }else{
+          console.log(res.data);
+          updatedUser.user.cartItems = res.data.cart;
+          updatedUser.user.cart = res.data.cart._id;
+          setUser({...updatedUser});
+        }
+        
       })
     }
   }

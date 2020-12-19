@@ -164,6 +164,10 @@
   border-bottom: 4px solid var(--accent);
   transition: border 0.1s ease;
 }
+.navBottomSearch{
+  display: none;
+}
+
 
 
 /* Responsive Code */
@@ -184,6 +188,7 @@
     padding: 0.2rem 2.4rem 0.1rem 0;
   }
 }
+
 
 @media only screen and (max-width: 768px){
 
@@ -225,5 +230,15 @@
 
   .navBottomSection{
     display: none;
+  }
+
+  .navBottomSearch{
+    display: block;
+    width: 100%;
+    padding: 0 1rem 0.8rem 1rem;
+  }
+
+  .searchBarInput{
+    width: 100%;
   }
 }

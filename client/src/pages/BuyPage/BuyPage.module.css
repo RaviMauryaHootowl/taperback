@@ -148,3 +148,33 @@
   font-weight: bold;
   border-radius: 2px;
 }
+
+/* Responsive Code */
+@media only screen and (max-width: 992px){
+
+  .cartViewPageContainer{
+    flex-direction: column-reverse;
+  }
+
+  .payDetailsPane{
+    padding: 0.5rem 0 0.5rem 0rem;
+  }
+
+}
+
+
+@media only screen and (max-width: 768px){
+
+  .cartViewPageContainer{
+    width: 95%;
+  }
+  
+}
+
+@media only screen and (max-width: 600px){
+
+  .cartViewPageContainer{
+    width: 99%;
+  }
+  
+}

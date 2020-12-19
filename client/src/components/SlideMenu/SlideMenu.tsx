@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './SlideMenu.module.css';
-import hamIcon from '../../images/hamIcon.svg';
+import closeIcon from '../../images/closeIcon.svg';
 import logo from '../../images/logo.svg'
 
 const NavLinksList = [
@@ -33,7 +33,7 @@ const NavLinksList = [
 const SlideMenu:React.FC<{onClickHam : ()=>void, pathName:string, navigateToGenrePage: (string) => void}> = ({onClickHam, pathName, navigateToGenrePage}) => {
   return (
     <div className={styles.slideMenuOuterContainer}>
-      <img src={hamIcon} className={styles.hamBtn} onClick={onClickHam} alt=""/>
+      <img src={closeIcon} className={styles.hamBtn} onClick={onClickHam} alt=""/>
       <div className={styles.navLinksContainer}>
         {
           NavLinksList.map((navLink, index) => {

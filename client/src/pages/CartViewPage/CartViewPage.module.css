@@ -32,6 +32,19 @@
   margin-bottom: 1rem;
 }
 
+.cartEmptyContainer{
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cartEmptyImg{
+  width: 100%;
+  max-width: 20rem;
+}
+
 
 .cartBookCard{
   width: 100%;
@@ -137,4 +150,35 @@
   color: white;
   font-weight: bold;
   border-radius: 2px;
+}
+
+
+/* Responsive Code */
+@media only screen and (max-width: 992px){
+
+  .cartViewPageContainer{
+    flex-direction: column-reverse;
+  }
+
+  .payDetailsPane{
+    padding: 0.5rem 0 0.5rem 0rem;
+  }
+
+}
+
+
+@media only screen and (max-width: 768px){
+
+  .cartViewPageContainer{
+    width: 95%;
+  }
+  
+}
+
+@media only screen and (max-width: 600px){
+
+  .cartViewPageContainer{
+    width: 99%;
+  }
+  
 }

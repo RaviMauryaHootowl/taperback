@@ -4,6 +4,7 @@ import axios from 'axios';
 import styles from './GenreBooksPage.module.css';
 import fantasyImg from '../../images/fantasyHeader.png'
 import childrensImg from '../../images/childrensHeader.png'
+import historyImg from '../../images/historyHeader.png'
 import {Book} from '../../interfaces/BookInterface'
 import {GenreGetInterface} from '../../interfaces/GenreGetInterface'
 import Loader from '../../components/Loader/Loader';
@@ -18,6 +19,12 @@ const genreMap:any = {
   "childrens" : {
     "name" : "Children's",
     "image": childrensImg,
+    "textColor": "#ffffff",
+    "shadowColor": "#000000"
+  },
+  "history" : {
+    "name" : "History",
+    "image": historyImg,
     "textColor": "#ffffff",
     "shadowColor": "#000000"
   }

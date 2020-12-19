@@ -10,7 +10,7 @@
 }
 
 .searchHeader{
-  width: 80%;
+  width: 100%;
   font-size: 1.5rem;
   font-weight: 600;
   display: flex;
@@ -28,7 +28,7 @@
 .searchBookCard{
   width: 100%;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   padding: 1rem;
   background-color: var(--fadewhite);
   margin-bottom: 1rem;
@@ -69,4 +69,66 @@
   font-size: 1.5rem;
   color: var(--accent);
   font-weight: bold;
+}
+
+/* Responsive Code */
+
+@media only screen and (max-width: 992px){
+
+  
+}
+
+
+@media only screen and (max-width: 768px){
+
+  .bookListContainer{
+    width: 95%;
+  }
+
+  .bookTitle{
+    font-size: 1.2rem;
+  }
+  .bookSubtitle{
+    font-size: 1.1rem;
+  }
+  .bookAuthor{
+    font-size: 1.1rem;
+  }
+
+  
+}
+
+@media only screen and (max-width: 600px){
+
+  .searchHeader{
+    font-size: 1.4rem;
+  }
+
+  .bookListContainer{
+    width: 99%;
+  }
+
+  .searchBookCard{
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 10px;
+    flex-direction: column;
+    align-items: center;
+  }
+  .bookInfoContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .bookTitle{
+    font-size: 1.1rem;
+    padding-bottom: 0.5rem;
+  }
+  .bookSubtitle{
+    font-size: 1rem;
+  }
+  .bookAuthor{
+    font-size: 1rem;
+  }
+  
 }

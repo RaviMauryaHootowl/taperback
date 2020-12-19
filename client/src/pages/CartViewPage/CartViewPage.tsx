@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import styles from './CartViewPage.module.css';
+import emptyCartImg from '../../images/emptycart.svg'
 import {Book} from '../../interfaces/BookInterface';
 import StarDisplay from '../../components/StarDisplay/StarDisplay';
 import { UserContext } from '../../contexts/UserContext';
@@ -9,6 +10,7 @@ import axios from 'axios';
 const CartViewPage = () => {
   const history = useHistory();
   const {user, setUser} = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [cartId, setCartId] = useState<string>("");
   const [cart, setCart] = useState<Array<Book>>([]);
   const [cartTotalCost, setCartTotalCost] = useState<number>(0);
@@ -22,14 +24,17 @@ const CartViewPage = () => {
   }, [user])
 
   useEffect(() => {
+    setIsLoading(true);
     if(cartId !== "" && cartId !== "0"){
       // fetch cart with book Items from api
       axios.get("/api/getCart", {
         params: {cartId: cartId}
       }).then((res) => {
         setCart(res.data);
+        setIsLoading(false)
       }).catch((err) => {
         alert("Server Error!")
+        setIsLoading(false)
       })
     }
   },[cartId])
@@ -52,6 +57,9 @@ const CartViewPage = () => {
             <span>Your Cart</span>
             <div className={styles.orangeLine}></div>
           </div>
+          {(cart && !isLoading && cart.length === 0) && <div className={styles.cartEmptyContainer}>
+            <img className={styles.cartEmptyImg} src={emptyCartImg} alt=""/>
+          </div>}
           <div className={styles.cartListContainer}>
             {
               cart.map((book, index) => {
@@ -60,7 +68,7 @@ const CartViewPage = () => {
             }
           </div>
         </div>
-        <div className={styles.payDetailsPane}>
+        {(cart && cart.length > 0) && <div className={styles.payDetailsPane}>
           <div className={styles.payDetailsContainer}>
             <span className={styles.pricingHeader}>Pricing Details</span>
             <div className={styles.priceSheetContainer}>
@@ -90,7 +98,7 @@ const CartViewPage = () => {
               history.push({pathname:'/checkout', state:{cart : cart, cartId: cartId}});
             }} className={styles.checkoutBtn}>Checkout</button>
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );
