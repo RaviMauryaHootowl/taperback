@@ -47,6 +47,10 @@ const LoginCard = () => {
     }
   }
 
+  const onFailureCallback = (error: any) => {
+    alert(error);
+  }
+
   return (
     <div className={styles.loginPageCard}>
         <img className={styles.logo} src={logo} alt=""/>
@@ -68,7 +72,7 @@ const LoginCard = () => {
           }
           buttonText={"Login"}
           onSuccess={onSuccessCallback}
-          onFailure={onSuccessCallback}
+          onFailure={onFailureCallback}
           cookiePolicy={'single_host_origin'}
           isSignedIn={true}
           />

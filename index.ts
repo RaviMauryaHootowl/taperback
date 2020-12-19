@@ -115,25 +115,30 @@ app.get("/api/genre", async (req: express.Request, res: express.Response) => {
 
 app.post("/api/userLogin", async (req: express.Request, res: express.Response) => {
   const {user} = req.body;
-  const userData = {
-    googleId: user.googleId,
-    email: user.email,
-    name: user.name,
-    cart: "0",
-    orders: []
+  if(user){
+    const userData = {
+      googleId: user.googleId,
+      email: user.email,
+      name: user.name,
+      cart: "0",
+      orders: []
+    }
+    // console.log(userData);
+    let result = await userModel.findOne({googleId: userData.googleId});
+    if(result == null){
+      result = new userModel(userData);
+      result.save();
+    }
+    let cart: any = await getCartDetails(userData.googleId);
+    const userObjectToSend = result.toObject({ getters: true, virtuals: false });
+    userObjectToSend.cartItems = cart;
+    userObjectToSend.cart = cart._id;
+    // console.log(userObjectToSend);
+    res.send(userObjectToSend)
+  }else{
+    res.send({message: "error"}).status(404)
   }
-  // console.log(userData);
-  let result = await userModel.findOne({googleId: userData.googleId});
-  if(result == null){
-    result = new userModel(userData);
-    result.save();
-  }
-  let cart: any = await getCartDetails(userData.googleId);
-  const userObjectToSend = result.toObject({ getters: true, virtuals: false });
-  userObjectToSend.cartItems = cart;
-  userObjectToSend.cart = cart._id;
-  // console.log(userObjectToSend);
-  res.send(userObjectToSend)
+  
 });
 
 app.post("/api/userLoginFast", async (req: express.Request, res: express.Response) => {
