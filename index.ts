@@ -127,7 +127,7 @@ app.post("/api/userLogin", async (req: express.Request, res: express.Response) =
     let result = await userModel.findOne({googleId: userData.googleId});
     if(result == null){
       result = new userModel(userData);
-      result.save();
+      await result.save();
     }
     let cart: any = await getCartDetails(userData.googleId);
     const userObjectToSend = result.toObject({ getters: true, virtuals: false });
