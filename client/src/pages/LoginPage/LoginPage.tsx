@@ -48,7 +48,7 @@ const LoginCard = () => {
   }
 
   const onFailureCallback = (error: any) => {
-    alert(error);
+    alert(JSON.stringify(error));
   }
 
   return (
