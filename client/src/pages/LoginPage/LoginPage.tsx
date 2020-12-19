@@ -34,7 +34,9 @@ const LoginCard = () => {
 
   const onSuccessCallback = (response : GoogleLoginResponse | GoogleLoginResponseOffline) =>{
     console.log("Logged In");
+    alert(JSON.stringify(response))
     if(response.code === undefined){
+      alert(JSON.stringify(response.code))
       const userProfileObj = (response as GoogleLoginResponse).profileObj;
       
       axios.post("/api/userLogin", {user : (response as GoogleLoginResponse).profileObj}).then(res => {
