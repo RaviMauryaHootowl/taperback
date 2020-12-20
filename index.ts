@@ -218,10 +218,7 @@ app.post("/api/addToCart", async (req: express.Request, res: express.Response) =
 })
 
 app.post("/api/orderCart", async (req: express.Request, res: express.Response) => {
-  const {tokenId, cartId, userGoogleId} = req.body;
-  console.log("------------------")
-  console.log(tokenId + " " + cartId + " " + userGoogleId);
-  console.log("------------------")
+  const {tokenId, cartId, userGoogleId, address} = req.body;
   const isVerified:boolean = await verify(tokenId);
 
   if(isVerified){

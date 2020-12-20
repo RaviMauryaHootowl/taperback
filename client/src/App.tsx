@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Navbar from './components/Navbar/Navbar';
 import SearchPage from './pages/SearchPage/SearchPage';
 import BookViewPage from './pages/BookViewPage/BookViewPage';
+import OrderCompletePage from './pages/OrderCompletePage/OrderCompletePage';
 import { UserContext } from './contexts/UserContext';
 import LoginPage from './pages/LoginPage/LoginPage';
 import GenreBooksPage from './pages/GenreBooksPage/GenreBooksPage';
@@ -44,6 +45,7 @@ const App:React.FC = () => {
         <Route path="/search" component={SearchPage}/>
         <Route path="/cart" exact component={CartViewPage}/>
         <Route path="/checkout" exact component={BuyPage}/>
+        <Route path="/ordercomplete" exact component={OrderCompletePage}/>
         <Route path="/book/:bookId" component={BookViewPage}/>
         <Route path="/genre/:genreName" component={GenreBooksPage}/>
       </UserContext.Provider>

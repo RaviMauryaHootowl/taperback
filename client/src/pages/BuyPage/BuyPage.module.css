@@ -100,16 +100,21 @@
   padding-bottom: 1rem;
 }
 
-.priceSheetContainer{
+.addressContainer{
   display: flex;
   flex-direction: column;
-  padding: 1rem 0;
 }
+
+.addressHeader{
+  margin-bottom: 0.2rem;
+}
+
 
 .addressTextArea{
   width: 100%;
   padding: 0.5rem;
   height: 10rem;
+  min-width: 16rem;
   resize: none;
   outline-color: var(--accent);
   font-size: 1rem;
@@ -141,12 +146,17 @@
   width: 100%;
   border: none;
   outline: none;
+  cursor: pointer;
   background-color: var(--accent);
   padding: 0.5rem 1rem;
   font-size: 1rem;
   color: white;
   font-weight: bold;
   border-radius: 2px;
+}
+
+.purchaseBtn:hover{
+  background-color: #e07006;
 }
 
 /* Responsive Code */
@@ -167,6 +177,10 @@
 
   .cartViewPageContainer{
     width: 95%;
+  }
+
+  .addressTextArea{
+    min-width: 0;
   }
   
 }

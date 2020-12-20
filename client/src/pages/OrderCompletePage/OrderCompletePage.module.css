@@ -32,19 +32,6 @@
   margin-bottom: 1rem;
 }
 
-.cartEmptyContainer{
-  padding: 1rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.cartEmptyImg{
-  width: 100%;
-  max-width: 20rem;
-}
-
 
 .cartBookCard{
   width: 100%;
@@ -97,7 +84,8 @@
   padding: 0.5rem 0 0.5rem 2rem;
 }
 
-.payDetailsContainer{
+.orderDetailsContainer{
+  width: 70%;
   padding: 1rem;
   background-color: var(--fadewhite);
   box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 8px;
@@ -106,16 +94,37 @@
   flex-direction: column;
 }
 
-.pricingHeader{
+.orderDetailsInnerContainer{
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1rem;
+}
+
+.orderHeader{
   font-size: 1.2rem;
   font-weight: 600;
   color: #161616;
+  padding-bottom: 1rem;
 }
 
-.priceSheetContainer{
+.addressContainer{
   display: flex;
   flex-direction: column;
-  padding: 1rem 0;
+}
+
+.addressHeader{
+  margin-bottom: 0.2rem;
+}
+
+
+.addressTextArea{
+  width: 100%;
+  padding: 0.5rem;
+  height: 10rem;
+  min-width: 16rem;
+  resize: none;
+  outline-color: var(--accent);
+  font-size: 1rem;
 }
 
 .priceTag{
@@ -140,21 +149,21 @@
   font-weight: bold;
 }
 
-.checkoutBtn{
-  width: 100%;
+.goBackBtn{
+  align-self: flex-end;
   border: none;
   outline: none;
   cursor: pointer;
   background-color: var(--accent);
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   font-size: 1rem;
   color: white;
   font-weight: bold;
   border-radius: 2px;
 }
 
-.checkoutBtn:hover{
-  background-color: #d86c08;
+.purchaseBtn:hover{
+  background-color: #e07006;
 }
 
 /* Responsive Code */
@@ -175,6 +184,10 @@
 
   .cartViewPageContainer{
     width: 95%;
+  }
+
+  .orderDetailsContainer{
+    width: 100%;
   }
   
 }

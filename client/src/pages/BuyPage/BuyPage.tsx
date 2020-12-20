@@ -33,9 +33,15 @@ const BuyPage = ({location}) => {
 
 
   const confirmPurchaseClick = () => {
+    if(address.trim() === ""){
+      alert("Enter a valid Shipping Address");
+      return;
+    }
+    
     const userGoogleId = user.user.googleId;
     const tokenId = user.tokenId;
-    axios.post("/api/orderCart", {tokenId, cartId: cartId, userGoogleId}).then(res => {
+
+    axios.post("/api/orderCart", {tokenId, cartId: cartId, userGoogleId, address}).then(res => {
       console.log(res.data);
       const {message} = res.data;
       if(message === "ordered"){
@@ -51,7 +57,8 @@ const BuyPage = ({location}) => {
       const updatedUser = user;
       updatedUser.user = res.data;
       setUser({...updatedUser});
-      history.replace("/");
+      //history.replace("/");
+      history.push({pathname:'/ordercomplete', state:{cart : cart, cartId: cartId}});
     });
   }
 
@@ -84,7 +91,8 @@ const BuyPage = ({location}) => {
           <div className={styles.payDetailsContainer}>
             <span className={styles.pricingHeader}>Shipping Details</span>
             <div className={styles.addressContainer}>
-              <textarea value={address} onChange={(e) => {setAddress(e.target.value)}} className={styles.addressTextArea} placeholder={"Enter your Shipping Address"}></textarea>
+              <span className={styles.addressHeader}>Shipping Address</span>
+              <textarea value={address} onChange={(e) => {setAddress(e.target.value)}} className={styles.addressTextArea} placeholder={"Your books will be delivered on this Address.\nMake sure the address is correct."}></textarea>
             </div>
             <div className={styles.splitLineOrange}></div>
             <table className={styles.totalTable}>
