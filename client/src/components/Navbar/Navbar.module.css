@@ -93,6 +93,8 @@
 .cartContainer{
   position: relative;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .searchBtnIcon, .cartIcon{
@@ -122,7 +124,13 @@
 
 .accountContainer{
   margin-left: 1.4rem;
-  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.accountContainer div{
+  display: flex;
+  align-items: center;
 }
 
 .accountIcon{
