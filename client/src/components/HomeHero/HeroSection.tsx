@@ -1,11 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import styles from './HeroSection.module.css';
-import heroImage from '../../images/heroimage.png';
-import heroImageSmall from '../../images/heroimagesmall.png';
-import heroImage2 from '../../images/heroimage2.png';
-import heroImage2Small from '../../images/heroimage2small.png';
-import heroImage3Small from '../../images/heroimage3small.png';
+import heroImage from '../../images/heroImage.png';
+import heroImageSmall from '../../images/heroImageSmall.png';
+import heroImage2 from '../../images/heroImage2.png';
+import heroImage2Small from '../../images/heroImage2Small.png';
+import heroImage3Small from '../../images/heroImage3Small.png';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import useWindowSize from '../../ResizeHook';
