@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import styles from './LoginPage.module.css';
 import logo from '../../images/logo.svg'
@@ -6,6 +6,7 @@ import gLogo from '../../images/googlelogo.png'
 import {GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline} from 'react-google-login';
 import {UserContext} from '../../contexts/UserContext';
 import axios from 'axios';
+import Loader from '../../components/Loader/Loader';
 
 
 const LoginPage:React.FC = () => {
@@ -30,25 +31,27 @@ const LoginCard = () => {
 
   const {user, setUser} = useContext(UserContext);
   const CLIENT_ID:string = process.env.REACT_APP_CLIENT_ID || "";
-
+  const [isLoading , setIsLoading] = useState<boolean>(false);
 
   const onSuccessCallback = (response : GoogleLoginResponse | GoogleLoginResponseOffline) =>{
     console.log("Logged In");
-    alert(JSON.stringify(response))
-    
+    //alert(JSON.stringify(response))
+    setIsLoading(true);
     const userProfileObj = (response as GoogleLoginResponse).profileObj;
     axios.post("/api/userLogin", {user : (response as GoogleLoginResponse).profileObj}).then(res => {
-      console.log(res.data);
       setUser({user: res.data, tokenId: (response as GoogleLoginResponse).tokenId, imageUrl: userProfileObj.imageUrl})
       localStorage.setItem("gAuth", JSON.stringify({user: res.data, tokenId: (response as GoogleLoginResponse).tokenId, imageUrl: userProfileObj.imageUrl}));
+      setIsLoading(false);
     }).catch((err) => {
-      console.log(err);
+      alert("There was an error!")
+      setIsLoading(false);
     });
+    
 
   }
 
   const onFailureCallback = (error: any) => {
-    alert(JSON.stringify(error));
+    // alert("Try");
   }
 
   return (
@@ -56,7 +59,7 @@ const LoginCard = () => {
         <img className={styles.logo} src={logo} alt=""/>
         <span className={styles.subQuote}>Today a reader,<br/>tomorrow a leader.</span>
 
-        <GoogleLogin 
+        {(isLoading) ? <div className={styles.loaderDiv}><Loader size={50} border={7} color={"#FC7B03"}/></div> :<GoogleLogin 
           clientId={CLIENT_ID}
           render={
             (props) => {
@@ -75,7 +78,7 @@ const LoginCard = () => {
           onFailure={onFailureCallback}
           cookiePolicy={'single_host_origin'}
           isSignedIn={true}
-          />
+          />}
 
     </div>
   );

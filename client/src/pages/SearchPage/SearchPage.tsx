@@ -4,6 +4,7 @@ import {useHistory} from 'react-router-dom';
 import queryString from 'querystring';
 import axios from 'axios';
 import SearchList from '../../components/SearchList/SearchList';
+
 import {Book} from '../../interfaces/BookInterface'
 
 const SearchPage = () => {
@@ -39,9 +40,9 @@ const SearchPage = () => {
   }
 
   return (
-    <div className={styles.searchPageContainer}>{
+    <div className={styles.searchPageContainer}>
       <SearchList bookData={bookData} isLoading={isLoading}/>
-    }
+    
     </div>
   );
 }

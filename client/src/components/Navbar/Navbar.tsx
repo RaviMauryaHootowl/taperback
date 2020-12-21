@@ -117,11 +117,10 @@ const Navbar = () => {
           </div></Link>
           <div className={styles.accountContainer}>
             {
-              (user == null) ? <div>
+              (user == null) ? <div className={styles.accountDiv}>
                 <img onClick={() => {history.push("/login")}} className={styles.accountIcon} src={userSample} alt=""/>
-
               </div> : (
-                <div>
+                <div className={styles.accountDiv}>
                   <img onClick={toggleMenu} className={styles.accountIcon} src={`${user.imageUrl}`} alt=""/>
                   <Menu menuData={[{name: "Account", action: ()=> {return true;}},{name: "View Orders", action: ()=> {return true;}},{name: "Logout", action: logOutUser}]} isMOpen={isMenuOpen} />
                 </div>

@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import BookSection from '../HomeBookSection/BookSection';
 import StarDisplay from '../StarDisplay/StarDisplay';
 import styles from './SearchList.module.css';
 import {Book} from '../../interfaces/BookInterface'
 import Loader from '../Loader/Loader';
+import emptySearch from '../../images/emptySearch.svg';
 
 const SearchList: React.FC<{bookData : Array<Book>, isLoading: boolean}> = ({bookData, isLoading}) => {
 
@@ -16,11 +16,12 @@ const SearchList: React.FC<{bookData : Array<Book>, isLoading: boolean}> = ({boo
         <div className={styles.orangeLine}></div>
       </div>
       {
-        (isLoading)? <div className={styles.loaderDiv}><Loader size={50} border={8} color={"#FC7B03"}/></div> :bookData.map((book, index) => {
+        (isLoading)? <div className={styles.loaderDiv}><Loader size={50} border={8} color={"#FC7B03"}/></div> : 
+        ((bookData && bookData.length === 0) ? <img className={styles.emptySearchImage} src={emptySearch} alt=""/> : bookData.map((book, index) => {
           return (
             <SearchBookCard book={book} key={index}/>
           );
-        })
+        }))
       }
     </div>
   );

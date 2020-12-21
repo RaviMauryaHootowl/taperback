@@ -108,7 +108,7 @@
   border-radius: 50%;
   width: 1.2rem;
   height: 1.2rem;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 500;
   background: var(--accent);
   color: rgb(49, 49, 49);
@@ -126,17 +126,15 @@
   margin-left: 1.4rem;
   display: flex;
   align-items: center;
-}
-
-.accountContainer div{
-  display: flex;
-  align-items: center;
+  position: relative;
 }
 
 .accountIcon{
   height: 2.3rem;
   border-radius: 100vh;
   cursor: pointer;
+  align-self: center;
+  margin-top: 0.4rem;
 }
 
 .accountIcon:active{

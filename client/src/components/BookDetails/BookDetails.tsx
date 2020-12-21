@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
+import {useHistory} from 'react-router-dom';
 import styles from './BookDetails.module.css';
 import {Book} from '../../interfaces/BookInterface'
 import StarDisplay from '../StarDisplay/StarDisplay';
@@ -7,6 +8,7 @@ import axios from 'axios';
 
 const BookDetails:React.FC<{bookDetails : Book}> = ({bookDetails}) => {
   const {user, setUser} = useContext(UserContext);
+  const history = useHistory();
   const updatedUser = user;
 
   const addToCartClick = () => {
@@ -25,6 +27,8 @@ const BookDetails:React.FC<{bookDetails : Book}> = ({bookDetails}) => {
         }
         
       })
+    }else{
+      history.push("/login");
     }
   }
 

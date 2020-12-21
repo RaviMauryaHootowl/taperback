@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
 import styles from './HeroSection.module.css';
 import heroImage from '../../images/heroImage.png';

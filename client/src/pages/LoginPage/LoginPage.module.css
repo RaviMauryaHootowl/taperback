@@ -55,3 +55,9 @@
   height: 2.2rem;
   margin-right: 1rem;
 }
+
+.loaderDiv{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

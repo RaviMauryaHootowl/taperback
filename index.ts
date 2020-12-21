@@ -88,10 +88,18 @@ app.get("/api/search", async (req: express.Request, res: express.Response) => {
   const searchQuery = req.query;
   // console.log(searchQuery);
   let searchBooks : Array<Book> = [];
-  const regexBookSearch = new RegExp(`${searchQuery.query}`, 'i')
-  searchBooks = await bookModel.find(
-    {title: {$regex: regexBookSearch}}
-  );
+  searchBooks = await bookModel.aggregate([
+    {
+      '$search': {
+        'text': {
+          'query': `${searchQuery.query}`, 
+          'path': [
+            'title', 'desc', 'subtitle', 'author'
+          ]
+        }
+      }
+    }
+  ])
   res.send(searchBooks);
 });
 
