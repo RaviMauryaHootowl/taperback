@@ -27,6 +27,10 @@
   margin-bottom: 1rem;
 }
 
+.loaderDiv{
+  align-self: center;
+}
+
 .emptySearchImage{
   width: 100%;
   max-width: 15rem;
