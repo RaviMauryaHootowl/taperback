@@ -1,0 +1,75 @@
+:root {
+  --fadewhite: #FAFAFA;
+  --accent: #FC7B03;
+  --rippleColor: rgba(255, 255, 255, 0.7);
+  --accentDark: #ec7505;
+  --selectbg: #EEEEEE;
+}
+
+.rippleBtn {
+  padding: 0.5rem 1.6rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: var(--accent);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.rippleBtnBorder {
+  padding: 0.4rem 1.6rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border: 2px solid var(--accent);
+  background-color: white;
+  color: var(--accent);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rippleBtn:active{
+  box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 5px;
+}
+
+.rippleBtn > .ripple {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  background: var(--rippleColor);
+  display: block;
+  content: "";
+  border-radius: 9999px;
+  opacity: 1;
+  animation: 0.9s ease 1 forwards ripple-effect;
+}
+
+@keyframes ripple-effect {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(10);
+    opacity: 0.375;
+  }
+  100% {
+    transform: scale(35);
+    opacity: 0;
+  }
+}
+
+.rippleBtn > .content {
+  position: relative;
+  z-index: 2;
+}

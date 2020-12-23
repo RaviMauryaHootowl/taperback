@@ -1,0 +1,119 @@
+:root {
+  --fadewhite: #FAFAFA;
+  --accent: #FC7B03;
+  --accentDark: #ec7505;
+  --selectbg: #EEEEEE;
+}
+
+.accountPageContainer{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.accountPageInnerContainer{
+  width: 80%;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.userProfileImage{
+  height: 10rem;
+  border-radius: 50vh;
+  border: var(--accent) 6px solid;
+  margin: 2rem;
+}
+.userInfoContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.userName{
+  font-size: 2rem;
+  font-weight: 600;
+}
+.userEmail{
+  font-weight: 400;
+  color: #474747;
+  font-style: italic;
+}
+
+.logoutBtn{
+  padding: 0.4rem 1.2rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: var(--accent);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  border-radius: 5px;
+  transition: all 0.5s ease ;
+  overflow: hidden;
+}
+
+span.ripple {
+  position: absolute; /* The absolute position we mentioned earlier */
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 600ms linear;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.logoutBtn:hover{
+  background-color: var(--accentDark);
+}
+
+
+
+/* Responsive Code */
+
+@media only screen and (max-width: 992px){
+
+  
+
+}
+
+
+@media only screen and (max-width: 768px){
+
+  .accountPageInnerContainer{
+    width: 95%;
+  }
+
+}
+
+@media only screen and (max-width: 600px){
+
+  .accountPageInnerContainer{
+    width: 99%;
+  }
+
+  .accountPageInnerContainer{
+    flex-direction: column;
+  }
+
+  .userInfoContainer{
+    align-items: center;
+  }
+  .userProfileImage{
+    height: 8rem;
+    border: var(--accent) 5px solid;
+    margin: 2rem;
+  }
+  .userName{
+    font-size: 1.8rem;
+  }
+  
+}

@@ -7,6 +7,7 @@ import StarDisplay from '../../components/StarDisplay/StarDisplay';
 import { UserContext } from '../../contexts/UserContext';
 import axios from 'axios';
 import Loader from '../../components/Loader/Loader';
+import RippleButton from '../../components/RippleButton/RippleButton';
 
 const CartViewPage = () => {
   const history = useHistory();
@@ -96,9 +97,9 @@ const CartViewPage = () => {
                   <td className={styles.priceTag}>Rs. {cartTotalCost + 110}</td>
                 </tr>
               </table>
-            <button onClick={() => {
+            <RippleButton onClick={() => {
               history.push({pathname:'/checkout', state:{cart : cart, cartId: cartId}});
-            }} className={styles.checkoutBtn}>Checkout</button>
+            }}>Checkout</RippleButton>
           </div>
         </div>}
       </div>

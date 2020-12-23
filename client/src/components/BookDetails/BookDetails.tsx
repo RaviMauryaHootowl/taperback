@@ -5,6 +5,7 @@ import {Book} from '../../interfaces/BookInterface'
 import StarDisplay from '../StarDisplay/StarDisplay';
 import {UserContext} from '../../contexts/UserContext';
 import axios from 'axios';
+import RippleButton from '../RippleButton/RippleButton';
 
 const BookDetails:React.FC<{bookDetails : Book}> = ({bookDetails}) => {
   const {user, setUser} = useContext(UserContext);
@@ -33,6 +34,10 @@ const BookDetails:React.FC<{bookDetails : Book}> = ({bookDetails}) => {
   }
 
   const buyNowBtn = () => {
+    if(user === null){
+      history.push("/login")
+      return;
+    }
     const userGoogleId = user.user.googleId;
     const tokenId = user.tokenId;
 
@@ -64,8 +69,8 @@ const BookDetails:React.FC<{bookDetails : Book}> = ({bookDetails}) => {
         </div>
         <span className={styles.bookCost}>₹{bookDetails.cost}/-</span>
         <div className={styles.buyBtnContainer}>
-          <button className={styles.buyBtn} onClick={buyNowBtn}>Buy Now</button>
-          <button className={styles.addToCartBtn} onClick={addToCartClick}>Add to Cart</button>
+          <RippleButton onClick={buyNowBtn} css={{marginRight:"0.5rem"}}>Buy Now</RippleButton>
+          <RippleButton onClick={addToCartClick} mode="border">Add to Cart</RippleButton>
         </div>
         <span className={styles.bookDesc}>{bookDetails.desc}</span>
       </div>

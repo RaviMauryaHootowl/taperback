@@ -4,6 +4,7 @@ import styles from './OrderCompletePage.module.css';
 import {Book} from '../../interfaces/BookInterface';
 import { UserContext } from '../../contexts/UserContext';
 import axios from 'axios';
+import RippleButton from '../../components/RippleButton/RippleButton';
 
 const OrderCompletePage = ({location}) => {
   const history = useHistory();
@@ -59,9 +60,9 @@ const OrderCompletePage = ({location}) => {
                 <td className={styles.priceTag}>Rs. {cartTotalCost + 110}</td>
               </tr>
             </table>
-            <button onClick={() => {
+            <RippleButton onClick={() => {
                 history.replace("/");
-              }} className={styles.goBackBtn}>Go to Home</button>
+              }} css={{alignSelf:"flex-end"}}>Go to Home</RippleButton>
             </div>
           </div>
           

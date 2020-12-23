@@ -5,6 +5,7 @@ import {Book} from '../../interfaces/BookInterface';
 import StarDisplay from '../../components/StarDisplay/StarDisplay';
 import { UserContext } from '../../contexts/UserContext';
 import axios from 'axios';
+import RippleButton from '../../components/RippleButton/RippleButton';
 
 const BuyPage = ({location}) => {
   const history = useHistory();
@@ -101,7 +102,7 @@ const BuyPage = ({location}) => {
                   <td className={styles.priceTag}>Rs. {cartTotalCost + 110}</td>
                 </tr>
               </table>
-            <button onClick={confirmPurchaseClick} className={styles.purchaseBtn}>Confirm Purchase</button>
+            <RippleButton onClick={confirmPurchaseClick}>Confirm Purchase</RippleButton>
           </div>
         </div>
       </div>

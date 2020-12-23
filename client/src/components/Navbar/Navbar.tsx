@@ -92,6 +92,11 @@ const Navbar = () => {
     history.push({pathname:`${genrePath}`});
   }
 
+  const navigateToAccountPage = () => {
+    history.push({pathname: "/account"})
+    toggleMenu();
+    return true;
+  }
   const navigateToViewOrders = () => {
     history.push({pathname: "/orders"})
     toggleMenu();
@@ -129,7 +134,7 @@ const Navbar = () => {
               </div> : (
                 <div className={styles.accountDiv}>
                   <img onClick={toggleMenu} className={styles.accountIcon} src={`${user.imageUrl}`} alt=""/>
-                  <Menu menuData={[{name: "Account", action: ()=> {return true;}},{name: "View Orders", action: navigateToViewOrders},{name: "Logout", action: logOutUser}]} isMOpen={isMenuOpen} />
+                  <Menu menuData={[{name: "Account", action: navigateToAccountPage},{name: "View Orders", action: navigateToViewOrders},{name: "Logout", action: logOutUser}]} isMOpen={isMenuOpen} />
                 </div>
               )
             }
