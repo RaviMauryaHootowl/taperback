@@ -26,18 +26,23 @@ const CartViewPage = () => {
   }, [user])
 
   useEffect(() => {
-    setIsLoading(true);
+    
+    console.log(`cartId: ${cartId}`)
     if(cartId !== "" && cartId !== "0"){
+      setIsLoading(true);
       // fetch cart with book Items from api
       axios.get("/api/getCart", {
         params: {cartId: cartId}
       }).then((res) => {
+        console.log(res.data);
         setCart(res.data);
         setIsLoading(false)
       }).catch((err) => {
         alert("Server Error!")
         setIsLoading(false)
       })
+    }else{
+      setIsLoading(false);
     }
   },[cartId])
 
