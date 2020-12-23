@@ -166,8 +166,15 @@ app.post("/api/userLoginFast", async (req: express.Request, res: express.Respons
 app.get("/api/refreshUser", async (req: express.Request, res: express.Response) => {
   const {userGoogleId} = req.query;
 
-  let user = await userModel.findOne({googleId: userGoogleId});
-  res.send(user);
+  const user = await userModel.findOne({googleId: userGoogleId});
+  if(user != null){
+    const cart = await getCartDetails(user.googleId);
+    const userObject = user.toObject();
+    userObject.cartItems = cart.toObject();
+    res.send(userObject);
+  }else{
+    res.send({message: "error"});
+  }
 
 })
 
@@ -180,7 +187,7 @@ const getCartDetails = async (userGoogleId: string) => {
     if(user.cart == "0"){
       const emptyCartObject = {
         user_id: userGoogleId,
-        status: "cart",
+        status: 0, // cart
         items: [],
         cost: 0
       }
@@ -225,21 +232,46 @@ app.post("/api/addToCart", async (req: express.Request, res: express.Response) =
   }
 })
 
+app.post("/api/createCartForBuy", async (req: express.Request, res: express.Response) => {
+  const {tokenId, bookId, userGoogleId} = req.body;
+  const emptyCartObject = {
+    user_id: userGoogleId,
+    status: 0, // cart
+    items: [
+      { bookId }
+    ],
+    cost: 0
+  }
+  // console.log("CREATING NEW CART.....");
+  const cart = new cartOrderModel(emptyCartObject);
+  await cart.save();
+  const cartId = cart._id;
+  const cartItems = cart.toObject().items;
+  let bookCartItems:any = [];
+  for(let i = 0; i < cartItems.length; i++){
+    const book = await fetchBookData(cartItems[i].bookId);
+    bookCartItems.push(book)
+  }
+  res.send({message: "cart created", cart : bookCartItems, cartId})
+})
+
 app.post("/api/orderCart", async (req: express.Request, res: express.Response) => {
   const {tokenId, cartId, userGoogleId, address} = req.body;
   const isVerified:boolean = await verify(tokenId);
-
+  console.log(isVerified);
   if(isVerified){
     // Mark Cart Status as ordered
     let cart:any = await cartOrderModel.findOne({_id : cartId});
     console.log(cart);
     if(cart){
-      cart.status = "ordered";
+      cart.status = 1;  // ordered
+      // set cart.cost
+      cart.cost = await getCartCost(cart.items);
       cart.save();
       // console.log("------------ cart status changed ------------------")
       // From users send this cartId to orders
       const user = await userModel.findOne({googleId: userGoogleId});
-      user.cart = "0";
+      if(user.cart == cartId) {user.cart = "0";}
       user.orders.push({id : cartId})
       user.save();
       res.send({"message" : "ordered"})
@@ -248,6 +280,32 @@ app.post("/api/orderCart", async (req: express.Request, res: express.Response) =
     res.send({"message" : "error"}).status(500)
   }
 });
+
+const getCartCost = async (cartItems) => {
+  let totalCost = 0
+  for(let i = 0; i < cartItems.length; i++){
+    const bookData = await fetchBookData(cartItems[i].bookId);
+    totalCost += Number(bookData.cost);
+  }
+  return totalCost;
+}
+
+app.get("/api/getOrders", async (req: express.Request, res: express.Response) => {
+  const {userGoogleId} = req.query; 
+  const user = await userModel.findOne({googleId: userGoogleId});
+  if(user !== null){
+    const orderedListIds = (user.toObject()).orders;
+    const orderedList:any = [];
+    for(let i = 0; i < orderedListIds.length; i++){
+      const cart = await cartOrderModel.findOne({_id : orderedListIds[i].id})
+      orderedList.push(cart.toObject());
+    }
+    console.log(orderedList);
+    res.send({orders: orderedList});
+  }else{
+    res.send({message: "error"})
+  }
+})
 
 const getBooksArray = async (books : Array<SectionBook>) => {
   let booksData : Array<Book> = [];

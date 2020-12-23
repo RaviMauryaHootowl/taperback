@@ -6,6 +6,8 @@ import fantasyImg from '../../images/fantasyHeader.png'
 import childrensImg from '../../images/childrensHeader.png'
 import historyImg from '../../images/historyHeader.png'
 import horrorImg from '../../images/horrorHeader.png'
+import msyteryImg from '../../images/mysteryHeader.png'
+import nonfictionImg from '../../images/nonfictionHeader.png'
 import {Book} from '../../interfaces/BookInterface'
 import {GenreGetInterface} from '../../interfaces/GenreGetInterface'
 import Loader from '../../components/Loader/Loader';
@@ -32,6 +34,18 @@ const genreMap:any = {
   "horror" : {
     "name" : "Horror",
     "image": horrorImg,
+    "textColor": "#ffffff",
+    "shadowColor": "#000000"
+  },
+  "mystery" : {
+    "name" : "Mystery",
+    "image": msyteryImg,
+    "textColor": "#ffffff",
+    "shadowColor": "#000000"
+  },
+  "nonfiction" : {
+    "name" : "Non-Fiction",
+    "image": nonfictionImg,
     "textColor": "#ffffff",
     "shadowColor": "#000000"
   }

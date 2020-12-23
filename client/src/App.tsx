@@ -12,6 +12,7 @@ import GenreBooksPage from './pages/GenreBooksPage/GenreBooksPage';
 import CartViewPage from './pages/CartViewPage/CartViewPage';
 import BuyPage from './pages/BuyPage/BuyPage';
 import axios from 'axios';
+import ViewOrdersPage from './pages/ViewOrdersPage/ViewOrdersPage';
 
 
 const App:React.FC = () => {
@@ -44,6 +45,7 @@ const App:React.FC = () => {
         <Route path="/login" exact component={LoginPage}/>
         <Route path="/search" component={SearchPage}/>
         <Route path="/cart" exact component={CartViewPage}/>
+        <Route path="/orders" exact component={ViewOrdersPage}/>
         <Route path="/checkout" exact component={BuyPage}/>
         <Route path="/ordercomplete" exact component={OrderCompletePage}/>
         <Route path="/book/:bookId" component={BookViewPage}/>

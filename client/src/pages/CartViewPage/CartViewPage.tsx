@@ -6,6 +6,7 @@ import {Book} from '../../interfaces/BookInterface';
 import StarDisplay from '../../components/StarDisplay/StarDisplay';
 import { UserContext } from '../../contexts/UserContext';
 import axios from 'axios';
+import Loader from '../../components/Loader/Loader';
 
 const CartViewPage = () => {
   const history = useHistory();
@@ -60,9 +61,10 @@ const CartViewPage = () => {
           {(cart && !isLoading && cart.length === 0) && <div className={styles.cartEmptyContainer}>
             <img className={styles.cartEmptyImg} src={emptyCartImg} alt=""/>
           </div>}
+          
           <div className={styles.cartListContainer}>
             {
-              cart.map((book, index) => {
+              (isLoading) ? <div className={styles.loaderDiv}><Loader size={50} border={8} color={"#FC7B03"}/></div> : cart.map((book, index) => {
                 return <CartBookCard key={index} book={book} />
               })
             }

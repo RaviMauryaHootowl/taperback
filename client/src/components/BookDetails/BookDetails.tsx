@@ -32,6 +32,23 @@ const BookDetails:React.FC<{bookDetails : Book}> = ({bookDetails}) => {
     }
   }
 
+  const buyNowBtn = () => {
+    const userGoogleId = user.user.googleId;
+    const tokenId = user.tokenId;
+
+    axios.post("/api/createCartForBuy", {tokenId, bookId: bookDetails._id, userGoogleId}).then(res => {
+      console.log(res.data);
+      const {message, cart, cartId} = res.data;
+      
+      if(message === "cart created"){
+        // refresh your user
+        history.push({pathname:'/checkout', state:{cart : cart, cartId: cartId}});
+      }else{
+        alert("There was some problem.")
+      }
+    })
+  }
+
   return (
     <div className={styles.bookDetailsPageContainer}>
       <div className={styles.bookCoverContainer}>
@@ -47,7 +64,7 @@ const BookDetails:React.FC<{bookDetails : Book}> = ({bookDetails}) => {
         </div>
         <span className={styles.bookCost}>₹{bookDetails.cost}/-</span>
         <div className={styles.buyBtnContainer}>
-          <button className={styles.buyBtn}>Buy Now</button>
+          <button className={styles.buyBtn} onClick={buyNowBtn}>Buy Now</button>
           <button className={styles.addToCartBtn} onClick={addToCartClick}>Add to Cart</button>
         </div>
         <span className={styles.bookDesc}>{bookDetails.desc}</span>

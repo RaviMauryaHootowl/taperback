@@ -76,6 +76,7 @@ const Navbar = () => {
 
   const onLogOutSuccess = () => {
     setUser(null);
+    localStorage.removeItem("gAuth");
     (isMenuOpen) && toggleMenu();
   }
 
@@ -89,6 +90,12 @@ const Navbar = () => {
 
   const navigateToGenrePage = (genrePath : String) => {
     history.push({pathname:`${genrePath}`});
+  }
+
+  const navigateToViewOrders = () => {
+    history.push({pathname: "/orders"})
+    toggleMenu();
+    return true;
   }
 
   return (
@@ -122,7 +129,7 @@ const Navbar = () => {
               </div> : (
                 <div className={styles.accountDiv}>
                   <img onClick={toggleMenu} className={styles.accountIcon} src={`${user.imageUrl}`} alt=""/>
-                  <Menu menuData={[{name: "Account", action: ()=> {return true;}},{name: "View Orders", action: ()=> {return true;}},{name: "Logout", action: logOutUser}]} isMOpen={isMenuOpen} />
+                  <Menu menuData={[{name: "Account", action: ()=> {return true;}},{name: "View Orders", action: navigateToViewOrders},{name: "Logout", action: logOutUser}]} isMOpen={isMenuOpen} />
                 </div>
               )
             }
