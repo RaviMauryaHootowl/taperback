@@ -1,7 +1,7 @@
 import React from 'react';
 import './RippleButton.css'
 
-const RippleButton = ({ children, onClick, marginRight="0rem", marginLeft="0rem", mode="fill", css={} }) => {
+const RippleButton = ({ children, onClick, mode="fill", css={} }) => {
   const [coords, setCoords] = React.useState({ x: -1, y: -1 });
   const [isRippling, setIsRippling] = React.useState(false);
 
