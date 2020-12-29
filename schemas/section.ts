@@ -19,5 +19,5 @@ const SectionSchema = new mongoose.Schema({
   ],
 }, {collection: "indexCollection"});
 
-const Book = mongoose.model("SectionSchema", SectionSchema);
-module.exports = Book;
+const Section = mongoose.model("SectionSchema", SectionSchema);
+module.exports = Section;

@@ -20,6 +20,14 @@ const BookSchema = new mongoose.Schema({
   cover: {
     type: String, 
     required: true
+  },
+  ratings: {
+    type: String, 
+    required: true
+  },
+  subtitle: {
+    type: String, 
+    required: true
   }
 }, {collection: "booksCollection"});
 

@@ -14,6 +14,7 @@ import BuyPage from './pages/BuyPage/BuyPage';
 import axios from 'axios';
 import ViewOrdersPage from './pages/ViewOrdersPage/ViewOrdersPage';
 import AccountPage from './pages/AccountPage/AccountPage';
+import PhoneScreen from './components/PhoneScreen/PhoneScreen';
 
 
 const App:React.FC = () => {
