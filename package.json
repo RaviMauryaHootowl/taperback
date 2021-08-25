@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon index.ts -V",
     "start": "ts-node index.ts",
     "client-install": "npm install --prefix client",
     "client": "npm start --prefix client",

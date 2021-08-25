@@ -1,6 +1,7 @@
-import express from 'express';
+import express, { NextFunction } from 'express';
 import { LoginTicket, OAuth2Client } from 'google-auth-library';
 import { Book, SectionBook, SectionDataSend, SectionsArrayDataGet } from 'interfaces/Interfaces';
+import {AppError} from '../utils/AppError';
 const apirouter = express.Router();
 const bookModel = require('../schemas/book');
 const sectionModel = require('../schemas/section');
@@ -12,23 +13,31 @@ const CLIENT_ID = `${process.env.REACT_APP_CLIENT_ID}`
 const client = new OAuth2Client(CLIENT_ID);
 
 
+// Fetch all books from the database
 apirouter.get("/allbooks", async (req : express.Request, res : express.Response) => {
   const books = await bookModel.find({});
   res.send(books);
 })
 
-apirouter.get("/findBook", async (req: express.Request, res: express.Response) => {
+// Find a book by book ID number
+apirouter.get("/findBook", async (req: express.Request, res: express.Response, next: NextFunction) => {
   if(!req.query){ res.status(400); }
-  const bookIdQuery = req.query;
-  let book : Book;
-  book = await bookModel.findById(bookIdQuery.bookId);
-  res.send(book);
+  try{
+    const bookIdQuery = req.query;
+    let book : Book;
+    book = await bookModel.findById(bookIdQuery.bookId);
+    if(!book){
+      next(new AppError("Book Not Found", 400));
+    }
+    res.send(book);
+  }catch(e){
+    next(new AppError("Something went wrong", 400));
+  }
 });
 
 apirouter.get("/indexBooks", async (req : express.Request, res : express.Response) => {
   const data : SectionsArrayDataGet = await sectionModel.find({});
   const sections:any = [];
-  // console.log("Index Books called!")
   const nOfSections = data.length;
   for(let i = 0; i < nOfSections; i++){
     const section = emptySectionModel();
@@ -38,14 +47,12 @@ apirouter.get("/indexBooks", async (req : express.Request, res : express.Respons
     section.sectionBooks = await getBooksArray(data[i].sectionBooks);
     sections.push(section);
   }
-  // console.log(sections);
   res.send(sections);
 })
 
 apirouter.get("/search", async (req: express.Request, res: express.Response) => {
   if(!req.query){ res.status(400); }
   const searchQuery = req.query;
-  // console.log(searchQuery);
   let searchBooks : Array<Book> = [];
   searchBooks = await bookModel.aggregate([
     {
@@ -76,9 +83,7 @@ const getBooksArray = async (books : Array<SectionBook>) => {
   const nOfBooks = books.length;
   for(let i = 0; i < nOfBooks; i++){
     const bookData = await fetchBookData(books[i].bookId);
-    
     booksData.push(bookData);
-    // console.log(bookData.title);
   }
   return booksData;
 } 
@@ -91,7 +96,6 @@ const fetchBookData = async (id: String) => {
 apirouter.get("/genre", async (req: express.Request, res: express.Response) => {
   if(!req.query){ res.status(400); }
   const genreQuery = req.query;
-  // console.log(genreQuery);
   let genreMatched = await genreModel.findOne(
     {genrePath: genreQuery.genrePath}
   );
@@ -102,7 +106,6 @@ apirouter.get("/genre", async (req: express.Request, res: express.Response) => {
   }
   genreResult.genreBooks = await getBooksArray(genreMatched.genreBooks);
 
-  // console.log(genreResult);
   res.send(genreResult);
 });
 
@@ -116,7 +119,6 @@ apirouter.post("/userLogin", async (req: express.Request, res: express.Response)
       cart: "0",
       orders: []
     }
-    // console.log(userData);
     let result = await userModel.findOne({googleId: userData.googleId});
     if(result == null){
       result = new userModel(userData);
@@ -126,7 +128,6 @@ apirouter.post("/userLogin", async (req: express.Request, res: express.Response)
     const userObjectToSend = result.toObject({ getters: true, virtuals: false });
     userObjectToSend.cartItems = cart;
     userObjectToSend.cart = cart._id;
-    // console.log(userObjectToSend);
     res.send(userObjectToSend)
   }else{
     res.send({message: "error"}).status(404)
@@ -176,7 +177,6 @@ const getCartDetails = async (userGoogleId: string) => {
         items: [],
         cost: 0
       }
-      // console.log("CREATING NEW CART.....");
       cart = new cartOrderModel(emptyCartObject);
       user.cart = cart._id;
       await user.save();
@@ -253,7 +253,6 @@ apirouter.post("/orderCart", async (req: express.Request, res: express.Response)
       // set cart.cost
       cart.cost = await getCartCost(cart.items);
       cart.save();
-      // console.log("------------ cart status changed ------------------")
       // From users send this cartId to orders
       const user = await userModel.findOne({googleId: userGoogleId});
       if(user.cart == cartId) {user.cart = "0";}

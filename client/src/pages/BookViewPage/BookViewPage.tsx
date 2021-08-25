@@ -18,12 +18,13 @@ const BookViewPage:React.FC<{match : any}> = ({match}) => {
         bookId: bookId
       }
       })
-      .then(function (response) {
+      .then((response) => {
         console.log(response.data);
         setBookDetails(response.data);
       })
-      .catch(function (error) {
-        alert("Server down!")
+      .catch((error) => {
+        const {statusCode, message} = error.response.data;
+        alert(message);
       });
   }
 
