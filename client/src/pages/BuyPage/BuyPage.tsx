@@ -6,6 +6,7 @@ import StarDisplay from '../../components/StarDisplay/StarDisplay';
 import { UserContext } from '../../contexts/UserContext';
 import axios from 'axios';
 import RippleButton from '../../components/RippleButton/RippleButton';
+import StripeContainer from '../../components/StripeContainer/StripeContainer';
 
 const BuyPage = ({location}) => {
   const history = useHistory();
@@ -53,6 +54,10 @@ const BuyPage = ({location}) => {
     })
   }
 
+  const errorInPayement = () => {
+    alert("Some Error Occurred!");
+  }
+
   const refreshUser = () => {
     axios.get("/api/refreshUser", {params: {userGoogleId: user.user.googleId}}).then((res) => {
       const updatedUser = user;
@@ -95,6 +100,8 @@ const BuyPage = ({location}) => {
               <span className={styles.addressHeader}>Shipping Address</span>
               <textarea value={address} onChange={(e) => {setAddress(e.target.value)}} className={styles.addressTextArea} placeholder={"Your books will be delivered on this Address.\nMake sure the address is correct."}></textarea>
             </div>
+            <span className={styles.paymentHeader}>Payment Method</span>
+            <StripeContainer amount={cartTotalCost + 110} buyCallBack={confirmPurchaseClick} errorCallback={errorInPayement}/>
             <div className={styles.splitLineOrange}></div>
             <table className={styles.totalTable}>
                 <tr>
@@ -102,7 +109,7 @@ const BuyPage = ({location}) => {
                   <td className={styles.priceTag}>Rs. {cartTotalCost + 110}</td>
                 </tr>
               </table>
-            <RippleButton onClick={confirmPurchaseClick}>Confirm Purchase</RippleButton>
+            
           </div>
         </div>
       </div>

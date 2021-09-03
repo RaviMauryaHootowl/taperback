@@ -120,6 +120,11 @@
   font-size: 1rem;
 }
 
+.paymentHeader{
+  margin: 1rem 0 0.2rem 0;
+  /* margin-bottom: 0.2rem; */
+}
+
 .priceTag{
   text-align: right;
   padding-left: 3rem;

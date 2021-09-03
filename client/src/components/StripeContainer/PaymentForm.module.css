@@ -1,0 +1,33 @@
+:root {
+    --fadewhite: #FAFAFA;
+    --accent: #FC7B03;
+  }
+
+.paymentFormContainer{
+    width: 100%;
+    margin: 0 0 5px 0;
+}
+
+.paymentFormGroup {
+    padding: 2px;
+	padding: 0;
+	border-style: none;
+	background-color: white;
+	will-change: opacity, transform;
+	border-radius: 2px;
+}
+
+.payementFormRow {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	margin-left: 15px;
+	border-top: 1px solid var(--accent);
+}
+
+
+.StripeElement {
+	width: 100%;
+	padding: 11px 15px 11px 0;
+}

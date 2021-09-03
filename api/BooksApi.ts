@@ -2,13 +2,15 @@ import express, { NextFunction } from 'express';
 import { LoginTicket, OAuth2Client } from 'google-auth-library';
 import { Book, SectionBook, SectionDataSend, SectionsArrayDataGet } from 'interfaces/Interfaces';
 import {AppError} from '../utils/AppError';
+require('dotenv').config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
 const apirouter = express.Router();
 const bookModel = require('../schemas/book');
 const sectionModel = require('../schemas/section');
 const genreModel = require('../schemas/genre');
 const userModel = require('../schemas/user');
 const cartOrderModel = require('../schemas/cartOrder');
-require('dotenv').config();
+
 const CLIENT_ID = `${process.env.REACT_APP_CLIENT_ID}`
 const client = new OAuth2Client(CLIENT_ID);
 
@@ -240,8 +242,34 @@ apirouter.post("/createCartForBuy", async (req: express.Request, res: express.Re
   res.send({message: "cart created", cart : bookCartItems, cartId})
 })
 
+
+apirouter.post("/payment", async (req: express.Request, res: express.Response) => {
+  let {amount, id, product} = req.body
+  try{
+    const payment = await stripe.paymentIntents.create({
+      amount,
+      currency: "INR",
+      description: product,
+      payment_method: id,
+      confirm: true
+    });
+    console.log("Pyament --", payment);
+    res.json({
+      message: "Payment Successful!",
+      success: true
+    })
+  }catch(error){
+    console.log("Payment- Error ", error);
+    res.json({
+      message: "Payment Failed",
+      success: false
+    })
+  }
+})
+
 apirouter.post("/orderCart", async (req: express.Request, res: express.Response) => {
   const {tokenId, cartId, userGoogleId, address} = req.body;
+  console.log(tokenId);
   const isVerified:boolean = await verify(tokenId);
   console.log(isVerified);
   if(isVerified){
